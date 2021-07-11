@@ -18,6 +18,8 @@ import {
   setVolume,
 } from "../../store/playerReducer";
 
+//компонента проигрывателя
+
 interface IPlayerProps {
   tracks: ITrack[];
   pause: boolean;
@@ -37,10 +39,12 @@ export const Player: React.FC<IPlayerProps> = ({
   duration,
   currentTime,
 }) => {
+  // индекс трека, найденный из поиска id всех треков равному id проигрывающему треку
   let candidateTrack = tracks.findIndex((track) => track._id === active?._id);
 
   const dispatch = useDispatch();
 
+  // следующий трек
   const onNextAudio = () => {
     if (candidateTrack - 1 < 0) {
       dispatch(setActiveTrack(tracks[tracks.length - 1]));
@@ -49,6 +53,7 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
+  // предыдущий трек
   const onPrevAudio = () => {
     if (candidateTrack < tracks.length - 1) {
       dispatch(setActiveTrack(tracks[candidateTrack + 1]));
@@ -57,6 +62,7 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
+  // настройка ссылки, громкости и длины на трек
   const setAudio = () => {
     if (active) {
       audio.src = `${mainUrl}/audio/${active.audio}`;
@@ -75,32 +81,39 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
+  // воспроизведение трека
   const onPlay = () => {
     dispatch(playTrack());
     audio.play();
   };
 
+  // пауза трека
   const onPause = () => {
     dispatch(pauseTrack());
     audio.pause();
   };
 
+  // изменение громкости трека
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     audio.volume = Number(e.target.value) / 100;
     dispatch(setVolume(Number(e.target.value)));
   };
 
+  // изменение длины трека
   const trackbarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     audio.currentTime = Number(e.target.value);
     dispatch(setCurrentTime(Number(e.target.value)));
   };
 
+  // функция конвертации длины трека в минуты и секунды
   function convertTrackTime(time: number): string {
     let minutes: any = "0" + Math.floor(time / 60);
     let seconds: any = "0" + Math.floor(time - minutes * 60);
     let dur: string | number = minutes.substr(-2) + ":" + seconds.substr(-2);
     return dur;
   }
+
+  // инициализация аудио
 
   useEffect(() => {
     if (!audio) {
@@ -109,6 +122,7 @@ export const Player: React.FC<IPlayerProps> = ({
       setAudio();
       onPlay();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
   return (

@@ -5,6 +5,8 @@ import { trackReducer } from "./trackReducer";
 import { playerReducer } from "./playerReducer";
 import { messageReducer } from "./messageReducer";
 
+// хранилище состояния приложения
+
 const rootReducer = combineReducers({
   authReducer,
   trackReducer,

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { IoIosCloudDownload } from "react-icons/io";
 import { IUser } from "../../interfaces/interfaces";
 
+//компонента загрузки аватара
+
 interface IAvatar {
   mainUrl: string;
   dispatch: Function;
@@ -22,6 +24,7 @@ export const Avatar: React.FC<IAvatar> = ({
     setAvatar(avatarFile);
   };
 
+  // загрузка аватара
   const uploadAvatarBtn = async () => {
     let formData = new FormData();
     formData.append("avatar", avatar as Blob);

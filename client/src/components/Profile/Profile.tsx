@@ -11,6 +11,8 @@ import { UploadTrack } from "./UploadTrack";
 import { DeleteTrack } from "./DeleteTrack";
 import { Chat } from "./Chat";
 
+// компонента профиля
+
 interface IProfileProps {
   tracks: ITrack[];
   messages: IMessage[];
@@ -42,8 +44,10 @@ export const Profile: React.FC<IProfileProps> = ({
     dispatch(setTracks());
   }, [dispatch, setTracks, createTrack, deleteTrack]);
 
+  // фильтрация своих треков из всех
   let myTracks = tracks.filter((element) => user.tracks.includes(element._id));
 
+  // id трека нужный для удаления трека
   const [trackId, setTrackId] = useState(0);
 
   return (

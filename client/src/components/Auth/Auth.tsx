@@ -5,6 +5,8 @@ import neonCircle from "./neonCircle.png";
 import { loginUser, registerUser } from "../../store/authReducer";
 import { useDispatch } from "react-redux";
 
+// контейнерная компонента логинизации и регистрации
+
 interface IAuthProps {
   infoAuthMsg: string;
 }

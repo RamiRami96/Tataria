@@ -2,6 +2,8 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { ITrack } from "../../interfaces/interfaces";
 
+// компонента загруженного трека
+
 interface MyTrackProps {
   track: ITrack;
   index: number;

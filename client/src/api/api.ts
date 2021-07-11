@@ -1,11 +1,19 @@
 import axios from "axios";
 import { ILoginForm, IRegisterForm, ITrack } from "../interfaces/interfaces";
 
+// запросы к  API приложения
+
+// url приложения
+
 export const mainUrl = "http://localhost:5000";
+
+// url апишки
 
 const instance = axios.create({
   baseURL: "http://localhost:5000/api",
 });
+
+// запросы на регистрацию,логинизаию и проверку залогинен ли пользователь
 
 export const authAPI = {
   register(data: IRegisterForm) {
@@ -20,6 +28,8 @@ export const authAPI = {
     });
   },
 };
+
+//запросы на получкение, создание, лайк и удаление треков
 
 export const trackAPI = {
   getTracks() {
@@ -55,6 +65,8 @@ export const trackAPI = {
     });
   },
 };
+
+// запрос на загрузку аватара
 
 export const userAPI = {
   uploadAvatar(avatar: object) {

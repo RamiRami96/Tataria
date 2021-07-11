@@ -7,6 +7,8 @@ import eq from "./eq.gif";
 import { unLikeTrack } from "../../store/trackReducer";
 import { useHistory } from "react-router-dom";
 
+// компонента трека из чарта
+
 interface IChartItemProps {
   setTracks: Function;
   track: ITrack;
@@ -32,13 +34,19 @@ export const ChartItem: React.FC<IChartItemProps> = ({
 
   let history = useHistory();
 
+  //проверка был ли поставлен лайк пользователем
+
   let isLiked = track.likes.some((like) => like === user.id);
+
+  // проигрывание трека
 
   const play = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(setActiveTrack(track));
     dispatch(playTrack());
   };
+
+  // функция при которой после 10-ти букв в предложении ставится троеточие
 
   function sliceText(text: string): string {
     let sliced = text.slice(0, 10);
@@ -47,6 +55,8 @@ export const ChartItem: React.FC<IChartItemProps> = ({
     }
     return sliced;
   }
+
+  // редирект на компоненту логинизации (если пользователь не зарегистрирован, profile возвращает компоненту логинизации)
 
   const doRedirect = () => {
     history.push("/profile");

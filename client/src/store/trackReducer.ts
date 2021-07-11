@@ -3,6 +3,8 @@ import { trackAPI } from "../api/api";
 import { Dispatch } from "redux";
 import { ITracks, ITrack, IAction } from "../interfaces/interfaces";
 
+// редьюсер треков
+
 const initialState: ITracks = {
   tracks: [],
   infoTrackMsg: "",

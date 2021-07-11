@@ -1,5 +1,7 @@
 import React from "react";
 
+// компонента удаления трека
+
 interface IDeleteProps {
   dispatch: Function;
   deleteTrack: Function;
@@ -11,7 +13,7 @@ export const DeleteTrack: React.FC<IDeleteProps> = ({
   dispatch,
   deleteTrack,
   setTracks,
-  trackId, 
+  trackId,
 }) => {
   const handleDelete = async (id: number) => {
     await dispatch(deleteTrack(id));

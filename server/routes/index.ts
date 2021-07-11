@@ -4,6 +4,8 @@ import authRouter from "./authRouter";
 import trackRouter from "./trackRouter";
 import userRouter from "./userRouter";
 
+// подключаем роуты
+
 router.use("/auth", authRouter);
 router.use("/tracks", trackRouter);
 router.use("/user", userRouter);

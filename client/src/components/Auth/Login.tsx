@@ -2,6 +2,8 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { ILoginForm } from "../../interfaces/interfaces";
 
+//компонетнта логинизации
+
 interface LoginProps {
   dispatch: Function;
   loginUser: Function;

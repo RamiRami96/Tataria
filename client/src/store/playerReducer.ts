@@ -1,5 +1,7 @@
 import { IAction, ITrack } from "../interfaces/interfaces";
 
+// редьюсер проигрывателя
+
 enum PlayerActionType {
   PLAY = "PLAY",
   PAUSE = "PAUSE",

@@ -3,6 +3,8 @@ import { Formik, Form, Field } from "formik";
 import { IMessage, IUser } from "../../interfaces/interfaces";
 import { IoMdSend } from "react-icons/io";
 
+// компонента чата
+
 interface IChatProps {
   user: IUser;
   dispatch: Function;
@@ -22,13 +24,17 @@ export const Chat: React.FC<IChatProps> = ({
   mainUrl,
   io,
 }) => {
+  // реф сокета
   const socketRef = React.useRef<any>(null);
+  // реф конца сообщений
   const messagesEndRef = React.useRef<any>(null);
 
+  // функция прокрутки к концу сообщений
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // инициализация io и вывод сообщений
   useEffect(() => {
     socketRef.current = io(mainUrl);
 
@@ -40,6 +46,8 @@ export const Chat: React.FC<IChatProps> = ({
 
     return () => socketRef.current.disconnect();
   }, [dispatch, io, mainUrl, setMessages]);
+
+  // отправка сообщений
 
   const onMessageSubmit = async (values: IMessage, { resetForm }: any) => {
     if (!values.message) {

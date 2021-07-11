@@ -3,11 +3,15 @@ import { Formik, Form, Field } from "formik";
 import { IRegisterForm } from "../../interfaces/interfaces";
 import * as Yup from "yup";
 
+// компонента регистрации
+
 interface RegisterProps {
   dispatch: Function;
   registerUser: Function;
   infoAuthMsg: string;
 }
+
+// валидация полей
 
 const RegisterSchema = Yup.object().shape({
   nickname: Yup.string()

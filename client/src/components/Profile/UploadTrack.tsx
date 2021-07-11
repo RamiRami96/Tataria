@@ -8,6 +8,8 @@ import {
 } from "react-icons/io";
 import { IFile } from "../../interfaces/interfaces";
 
+// компонента загрузки трека
+
 interface IUploadProps {
   dispatch: Function;
   createTrack: Function;
@@ -28,6 +30,8 @@ enum PosterFormats {
   png = "image/png",
 }
 
+// функция проверка на тип изображения
+
 function checkIfPosterIsCorrectType(file?: IFile): boolean {
   if (file?.type === undefined) {
     return true;
@@ -43,6 +47,8 @@ function checkIfPosterIsCorrectType(file?: IFile): boolean {
   }
 }
 
+// функция проверка на тип аудио
+
 function checkIfAudioIsCorrectType(file?: IFile): boolean {
   if (file?.type === undefined) {
     return true;
@@ -55,7 +61,9 @@ function checkIfAudioIsCorrectType(file?: IFile): boolean {
   }
 }
 
-const ProfileSchema = Yup.object().shape({
+// валидация загрузки трека
+
+const uploadSchema = Yup.object().shape({
   title: Yup.string().required("Поле обязательно!"),
   poster: Yup.mixed()
     .required("Поле обязательно!")
@@ -82,6 +90,8 @@ export const UploadTrack: React.FC<IUploadProps> = ({
   trackLoading,
 }) => {
   const [fileValue, setFileValue] = useState({ poster: false, audio: false });
+
+  // функция изменяющее состояние постера или аудио в зависимости от выбранного поля
   const changeField = (
     event: React.ChangeEvent<HTMLInputElement>,
     changeFunc: Function,
@@ -96,6 +106,8 @@ export const UploadTrack: React.FC<IUploadProps> = ({
     }
     changeFunc(field, event.currentTarget.files![0]);
   };
+
+  // загрузка трека с последующим обновлением состояния треков
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     let formData = new FormData();
@@ -137,7 +149,7 @@ export const UploadTrack: React.FC<IUploadProps> = ({
             <div className="modal-body ">
               <Formik
                 initialValues={initialValues}
-                validationSchema={ProfileSchema}
+                validationSchema={uploadSchema}
                 onSubmit={(values, actions) => {
                   handleSubmit(values, actions);
                 }}

@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+// схема трека
+
 const Track = new Schema({
   artist: { type: String, required: true },
   title: { type: String, required: true },

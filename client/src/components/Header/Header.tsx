@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { IUser } from "../../interfaces/interfaces";
 import { IoIosMenu } from "react-icons/io";
 
+// компонента шапки
+
 interface IHeaderProps {
   user: IUser;
   isAuth: boolean;
@@ -17,6 +19,8 @@ export const Header: React.FC<IHeaderProps> = ({
   dispatch,
   logoutUser,
 }) => {
+  // логика при которой ссылка в шапке будет активной в зависимости от нахождения
+  // в нужной компоненте пользователя
   const { pathname } = useLocation();
   const splitLocation = pathname.split("/");
   return (

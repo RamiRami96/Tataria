@@ -4,6 +4,8 @@ import { IoMdHeart, IoMdMusicalNotes } from "react-icons/io";
 import { ITrack, IUser } from "../../interfaces/interfaces";
 import { ChartItem } from "./ChartItem";
 
+// компонента чарта
+
 interface IChartProps {
   dispatch: Function;
   setTracks: Function;

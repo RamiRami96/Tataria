@@ -1,5 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 
+// схема пользователя
+
 const User = new Schema({
   email: { type: String, required: true, unique: true },
   nickname: { type: String, required: true, unique: true },

@@ -1,6 +1,8 @@
 import { IAction, IMessages } from "../interfaces/interfaces";
 import { Dispatch } from "redux";
 
+// редьюсер чата
+
 const initialState: IMessages = {
   messages: [],
   messageLoading: false,
