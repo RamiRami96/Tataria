@@ -1,3 +1,3 @@
 # Tataria
 
-![Alt text](relative/path/to/chart.jpg?raw=true "Title")
+![alt text](Rttps://github.com/[RamiRami96]/[Tataria]/blob/[master]/chart.jpg?raw=true)
