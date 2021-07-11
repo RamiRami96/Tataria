@@ -389,6 +389,8 @@ body .profile__chat .msg_cotainer {
   margin-left: 10px;
   border-radius: 25px;
   background-color: #fa255e;
+  color: #fff;
+  font-weight: 500;
   padding: 10px;
   position: relative;
 }
@@ -399,6 +401,8 @@ body .profile__chat .msg_cotainer_send {
   margin-right: 10px;
   border-radius: 25px;
   background-color: #01e3a5;
+  color: #000;
+  font-weight: 500;
   padding: 10px;
   position: relative;
 }
