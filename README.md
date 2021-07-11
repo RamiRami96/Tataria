@@ -9,7 +9,7 @@
 <br/>
 <br/>
 <br/>
-![alt text](https://github.com/RamiRami96/Tataria/blob/main/profile.jpg)
+![alt text](https://github.com/RamiRami96/Tataria/blob/main/chat.jpg)
 <br/>
 <br/>
 ![alt text](https://github.com/RamiRami96/Tataria/blob/main/login.jpg)
