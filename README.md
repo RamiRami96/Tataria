@@ -6,6 +6,8 @@
 
 ![alt text](https://github.com/RamiRami96/Tataria/blob/main/chart.jpg)
 <br/>
+<br/>
+<br/>
 ![alt text](https://github.com/RamiRami96/Tataria/blob/main/profile.jpg)
 <br/>
 ![alt text](https://github.com/RamiRami96/Tataria/blob/main/login.jpg)
