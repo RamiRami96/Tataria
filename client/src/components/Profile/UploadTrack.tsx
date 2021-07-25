@@ -36,10 +36,10 @@ function checkIfPosterIsCorrectType(file?: IFile): boolean {
   if (file?.type === undefined) {
     return true;
   } else {
-    if (file!.type.includes(PosterFormats.jpeg)) {
-      return true;
-    }
-    if (file!.type.includes(PosterFormats.png)) {
+    if (
+      file!.type.includes(PosterFormats.jpeg) ||
+      file!.type.includes(PosterFormats.png)
+    ) {
       return true;
     } else {
       return false;

@@ -63,6 +63,7 @@ export interface IMessages {
 }
 
 export interface IMessage {
+  _id: any;
   avatar: string | undefined;
   nick: string | undefined;
   message: string;

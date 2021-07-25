@@ -62,6 +62,18 @@ export const ChartItem: React.FC<IChartItemProps> = ({
     history.push("/profile");
   };
 
+  const onUnLike = () => {
+    setAnime(true);
+    dispatch(unLikeTrack(track._id));
+    dispatch(setTracks());
+  };
+
+  const onLike = () => {
+    setAnime(true);
+    dispatch(likeTrack(track._id));
+    dispatch(setTracks());
+  };
+
   return (
     <>
       <tr>
@@ -72,48 +84,36 @@ export const ChartItem: React.FC<IChartItemProps> = ({
         <td>{sliceText(track.artist)}</td>
         <td>{sliceText(track.title)}</td>
         <td>
-          <>
+          <div className="d-flex">
             {isLiked ? (
               <IoIosHeart
                 className={
-                  anime
-                    ? "me-1 pb-1 like-icon animate-icon"
-                    : "me-1 pb-1 like-icon"
+                  anime ? "me-1  like-icon animate-icon" : "me-1  like-icon"
                 }
                 onAnimationEnd={() => {
                   setAnime(false);
                 }}
-                onClick={() => {
-                  setAnime(true);
-                  dispatch(unLikeTrack(track._id));
-                  dispatch(setTracks());
-                }}
+                onClick={onUnLike}
               />
             ) : isAuth ? (
               <IoIosHeartEmpty
                 className={
-                  anime
-                    ? "me-1 pb-1 like-icon animate-icon"
-                    : "me-1 pb-1 like-icon"
+                  anime ? "me-1  like-icon animate-icon" : "me-1  like-icon"
                 }
                 onAnimationEnd={() => {
                   setAnime(false);
                 }}
-                onClick={() => {
-                  setAnime(true);
-                  dispatch(likeTrack(track._id));
-                  dispatch(setTracks());
-                }}
+                onClick={onLike}
               />
             ) : (
               <IoIosHeartEmpty
-                className={"me-1 pb-1 like-icon "}
+                className={"me-1  like-icon "}
                 onClick={doRedirect}
               />
             )}
 
             {track.likes.length}
-          </>
+          </div>
         </td>
         <td>
           {active === track ? (

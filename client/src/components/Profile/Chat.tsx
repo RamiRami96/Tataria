@@ -65,8 +65,8 @@ export const Chat: React.FC<IChatProps> = ({
           <h2 className="text-white">Чат</h2>
         </div>
         <div className="card-body msg_card_body">
-          {messages.map(({ avatar, nick, message }: IMessage, index: any) => (
-            <div key={index}>
+          {messages.map(({ _id, avatar, nick, message }: IMessage) => (
+            <div key={_id}>
               {user.nickname === nick ? (
                 <div className="d-flex justify-content-start mb-4">
                   <img
@@ -98,6 +98,7 @@ export const Chat: React.FC<IChatProps> = ({
         <div className="card-footer">
           <Formik
             initialValues={{
+              _id: null,
               message: "",
               nick: user.nickname,
               avatar: user.avatar,
@@ -113,6 +114,7 @@ export const Chat: React.FC<IChatProps> = ({
                 name="message"
                 className="form-control type_msg"
                 placeholder="Введите сообщение..."
+                autoComplete="off"
               />
 
               <button type="submit" className="btn btn-outline-danger ">

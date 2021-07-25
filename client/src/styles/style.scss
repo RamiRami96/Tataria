@@ -10,7 +10,7 @@ $speed: 10s;
 body {
   margin: 0;
   padding: 0;
-  min-width: 420px;
+  min-width: 320px;
   background-color: $bc;
   font-family: "Montserrat", sans-serif;
 
@@ -299,11 +299,16 @@ body {
         border: 0 !important;
         color: white !important;
         height: 50px !important;
+        -webkit-box-shadow: inset 0 0 0 50px $bc;
+        box-shadow: inset 0 0 0 50px $bc;
+        -webkit-appearance: none;
+        -webkit-text-fill-color: $wc;
       }
       .type_msg:focus {
         box-shadow: none !important;
         outline: 0px !important;
       }
+
       button {
         background-color: $bc !important;
         border: 0 !important;

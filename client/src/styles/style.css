@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  min-width: 420px;
+  min-width: 320px;
   background-color: #000;
   font-family: "Montserrat", sans-serif;
 }
@@ -360,6 +360,10 @@ body .profile__chat .type_msg {
   border: 0 !important;
   color: white !important;
   height: 50px !important;
+  -webkit-box-shadow: inset 0 0 0 50px #000;
+  box-shadow: inset 0 0 0 50px #000;
+  -webkit-appearance: none;
+  -webkit-text-fill-color: #fff;
 }
 
 body .profile__chat .type_msg:focus {

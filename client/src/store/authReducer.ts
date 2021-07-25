@@ -8,6 +8,8 @@ import {
 } from "../interfaces/interfaces";
 import { Dispatch } from "redux";
 
+// редьюсер авторизации
+
 const initialState: IAuth = {
   user: {},
   isAuth: false,

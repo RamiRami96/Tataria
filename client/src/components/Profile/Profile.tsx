@@ -117,7 +117,7 @@ export const Profile: React.FC<IProfileProps> = ({
               <tbody>
                 {myTracks.reverse().map((track: ITrack, index: number) => (
                   <MyTrack
-                    key={index}
+                    key={track._id}
                     index={index}
                     track={track}
                     mainUrl={mainUrl}

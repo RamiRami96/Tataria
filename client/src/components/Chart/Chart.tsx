@@ -66,7 +66,7 @@ export const Chart: React.FC<IChartProps> = ({
                 .map((track, index) => (
                   <ChartItem
                     setTracks={setTracks}
-                    key={index}
+                    key={track._id}
                     track={track}
                     index={index}
                     dispatch={dispatch}
@@ -114,7 +114,7 @@ export const Chart: React.FC<IChartProps> = ({
                 .map((track, index) => (
                   <ChartItem
                     setTracks={setTracks}
-                    key={index}
+                    key={track._id}
                     track={track}
                     index={index}
                     dispatch={dispatch}
