@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { ITrack, IUser } from "../../interfaces/interfaces";
 import { IoIosHeart, IoIosHeartEmpty, IoIosPlay } from "react-icons/io";
-import { mainUrl } from "../../api/api";
-import { playTrack, setActiveTrack } from "../../store/playerReducer";
-import eq from "./eq.gif";
-import { unLikeTrack } from "../../store/trackReducer";
-import { useHistory } from "react-router-dom";
 
 // компонента трека из чарта
 
@@ -18,6 +13,11 @@ interface IChartItemProps {
   active?: ITrack;
   user: IUser;
   isAuth: boolean;
+  playTrack: Function;
+  setActiveTrack: Function;
+  unLikeTrack: Function;
+  mainUrl: string;
+  eq: string;
 }
 
 export const ChartItem: React.FC<IChartItemProps> = ({
@@ -26,14 +26,16 @@ export const ChartItem: React.FC<IChartItemProps> = ({
   index,
   dispatch,
   likeTrack,
+  unLikeTrack,
   active,
   user,
   isAuth,
+  setActiveTrack,
+  playTrack,
+  mainUrl,
+  eq,
 }) => {
   const [anime, setAnime] = useState(false);
-
-  let history = useHistory();
-
   //проверка был ли поставлен лайк пользователем
 
   let isLiked = track.likes.some((like) => like === user.id);
@@ -49,18 +51,8 @@ export const ChartItem: React.FC<IChartItemProps> = ({
   // функция при которой после 10-ти букв в предложении ставится троеточие
 
   function sliceText(text: string): string {
-    let sliced = text.slice(0, 10);
-    if (sliced.length < text.length) {
-      sliced += "...";
-    }
-    return sliced;
+    return text.length > 10 ? text.slice(0, 10).toString() + "..." : text;
   }
-
-  // редирект на компоненту логинизации (если пользователь не зарегистрирован, profile возвращает компоненту логинизации)
-
-  const doRedirect = () => {
-    history.push("/profile");
-  };
 
   const onUnLike = () => {
     setAnime(true);
@@ -106,10 +98,7 @@ export const ChartItem: React.FC<IChartItemProps> = ({
                 onClick={onLike}
               />
             ) : (
-              <IoIosHeartEmpty
-                className={"me-1  like-icon "}
-                onClick={doRedirect}
-              />
+              <IoIosHeartEmpty className={"me-1  like-icon "} />
             )}
 
             {track.likes.length}

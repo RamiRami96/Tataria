@@ -22,6 +22,8 @@ import {
 import { RootState } from "./store/store";
 import "./styles/style.css";
 import preloader from "./preloader.gif";
+import { playTrack, setActiveTrack } from "./store/playerReducer";
+import { mainUrl } from "./api/api";
 /// <reference path="globals.d.ts" />
 
 // главня контейнерная компонента приложения
@@ -55,6 +57,12 @@ export const App: React.FC = () => {
     <>
       <Router>
         <div className="container">
+          <Header
+            user={user}
+            isAuth={isAuth}
+            dispatch={dispatch}
+            logoutUser={logoutUser}
+          />
           {authLoading ? (
             <div className="row">
               <div className="col-12 d-flex justify-content-center align-items-center preloader">
@@ -63,12 +71,6 @@ export const App: React.FC = () => {
             </div>
           ) : (
             <>
-              <Header
-                user={user}
-                isAuth={isAuth}
-                dispatch={dispatch}
-                logoutUser={logoutUser}
-              />
               <Switch>
                 <Route
                   exact
@@ -83,6 +85,9 @@ export const App: React.FC = () => {
                       tracks={tracks}
                       user={user}
                       isAuth={isAuth}
+                      playTrack={playTrack}
+                      setActiveTrack={setActiveTrack}
+                      mainUrl={mainUrl}
                     />
                   )}
                 />
@@ -104,6 +109,7 @@ export const App: React.FC = () => {
                         infoTrackMsg={infoTrackMsg}
                         trackLoading={trackLoading}
                         refreshUser={refreshUser}
+                        mainUrl={mainUrl}
                       />
                     ) : (
                       <Auth infoAuthMsg={infoAuthMsg} />
@@ -118,6 +124,7 @@ export const App: React.FC = () => {
                 active={active}
                 duration={duration}
                 currentTime={currentTime}
+                mainUrl={mainUrl}
               />
             </>
           )}

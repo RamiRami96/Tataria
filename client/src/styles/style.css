@@ -123,6 +123,8 @@ body .chart .right-side .like-icon {
 body .chart .left-side .play-icon,
 body .chart .right-side .play-icon {
   cursor: pointer;
+  width: 20px;
+  height: 20px;
 }
 
 body .chart .left-side .animate-icon,

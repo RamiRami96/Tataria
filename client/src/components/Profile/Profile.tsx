@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { IoMdHeart, IoMdClose } from "react-icons/io";
-import { mainUrl } from "../../api/api";
 import { IMessage, ITrack, IUser } from "../../interfaces/interfaces";
 import { io } from "socket.io-client";
 import { addMessage, setMessages } from "../../store/messageReducer";
@@ -25,6 +24,7 @@ interface IProfileProps {
   infoTrackMsg: string;
   trackLoading: boolean;
   refreshUser: Function;
+  mainUrl: string;
 }
 
 export const Profile: React.FC<IProfileProps> = ({
@@ -39,6 +39,7 @@ export const Profile: React.FC<IProfileProps> = ({
   infoTrackMsg,
   trackLoading,
   refreshUser,
+  mainUrl,
 }) => {
   useEffect(() => {
     dispatch(setTracks());

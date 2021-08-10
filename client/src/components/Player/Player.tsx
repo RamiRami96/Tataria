@@ -7,7 +7,6 @@ import {
   IoMdVolumeHigh,
 } from "react-icons/io";
 import { useDispatch } from "react-redux";
-import { mainUrl } from "../../api/api";
 import { ITrack } from "../../interfaces/interfaces";
 import {
   pauseTrack,
@@ -27,6 +26,7 @@ interface IPlayerProps {
   active: ITrack;
   duration: number;
   currentTime: number;
+  mainUrl: string;
 }
 
 let audio: any;
@@ -38,6 +38,7 @@ export const Player: React.FC<IPlayerProps> = ({
   active,
   duration,
   currentTime,
+  mainUrl,
 }) => {
   // индекс трека, найденный из поиска id всех треков равному id проигрывающему треку
   let candidateTrack = tracks.findIndex((track) => track._id === active?._id);
