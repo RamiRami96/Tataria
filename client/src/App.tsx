@@ -21,7 +21,7 @@ import {
 } from "./store/trackReducer";
 import { RootState } from "./store/store";
 import "./styles/style.css";
-import preloader from "./preloader.gif";
+import preloader from "./images/preloader.gif";
 import { playTrack, setActiveTrack } from "./store/playerReducer";
 import { mainUrl } from "./api/api";
 /// <reference path="globals.d.ts" />

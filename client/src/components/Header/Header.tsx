@@ -45,7 +45,9 @@ export const Header: React.FC<IHeaderProps> = ({
         >
           <div className="offcanvas-header">
             <h6 className="text-white" id="offcanvasRightLabel">
-              С возвращением, {user.nickname}!
+              {user.nickname
+                ? `С возвращением, ${user.nickname}!`
+                : "Войдите или зарегистрируетесь!"}
             </h6>
             <button
               type="button"
@@ -62,6 +64,13 @@ export const Header: React.FC<IHeaderProps> = ({
               <li>
                 <Link to="/profile"> {isAuth ? "Профиль" : "Войти"}</Link>
               </li>
+              {isAuth && (
+                <li>
+                  <Link to="/profile" onClick={() => dispatch(logoutUser())}>
+                    Выйти
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
