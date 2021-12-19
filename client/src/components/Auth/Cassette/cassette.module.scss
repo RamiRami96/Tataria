@@ -1,0 +1,477 @@
+$bc: #000;
+$gc: #181818;
+$wc: #fff;
+$rc: #fa255e;
+$speed: 10s;
+
+.poster {
+  height: 80vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.circle {
+  object-fit: contain;
+  object-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.cassette {
+  width: 300px;
+  height: 190px;
+  font-size: 0.55em;
+  background: $gc;
+  border-radius: 10px;
+  border: 4px solid $rc;
+  position: absolute;
+
+  &:after {
+    display: block;
+    content: "";
+    width: 104%;
+    height: 30%;
+    margin-left: -2%;
+    background: $gc;
+    border-radius: 10px;
+    bottom: 7%;
+    position: absolute;
+    z-index: -1;
+    border: 4px solid $rc;
+  }
+
+  &:before {
+    display: block;
+    content: "";
+    width: 89%;
+    height: 4px;
+    margin: auto;
+    background: rgba(white, 0.1);
+    border-radius: 10px;
+    top: 3%;
+    position: relative;
+  }
+
+  .label {
+    width: 90%;
+    height: 64%;
+    position: relative;
+    margin: auto;
+    top: 7%;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 4px $rc;
+    background: linear-gradient(
+      $rc 8%,
+      $wc 8%,
+      $wc 30%,
+      $gc 30%,
+      $gc 31.5%,
+      $wc 31.5%,
+      $wc 36%,
+      $gc 36%,
+      $gc 37.5%,
+      $wc 37.5%,
+      $wc 39%,
+      $gc 39%,
+      $gc 40.5%,
+      $wc 40.5%,
+      $wc 42%,
+      $gc 42%,
+      $gc 43.5%,
+      $wc 43.5%,
+      $wc 45%,
+      $gc 45%,
+      $gc 46.5%,
+      $wc 46.5%,
+      $wc 48%,
+      $gc 48%,
+      $gc 49.5%,
+      $wc 49.5%,
+      $wc 51%,
+      $gc 51%,
+      $gc 52.5%,
+      $wc 52.5%,
+      $wc 54%,
+      $gc 54%,
+      $gc 55.5%,
+      $wc 55.5%,
+      $wc 57%,
+      $gc 57%,
+      $gc 58.5%,
+      $wc 58.5%,
+      $wc 60%,
+      $gc 60%,
+      $gc 61.5%,
+      $wc 61.5%,
+      $wc 63%,
+      $gc 63%,
+      $gc 64.5%,
+      $wc 64.5%,
+      $wc 66%,
+      $gc 66%,
+      $gc 67.5%,
+      $wc 67.5%,
+      $wc 69%,
+      $gc 69%,
+      $gc 70.5%,
+      $wc 70.5%,
+      $wc 72%,
+      $gc 72%,
+      $gc 73.5%,
+      $wc 73.5%,
+      $wc 75%,
+      $gc 75%,
+      $gc 76.5%,
+      $wc 76.5%,
+      $wc 78%,
+      $gc 78%,
+      $gc 79.5%,
+      $wc 79.5%,
+      $wc 81%,
+      $gc 81%,
+      $gc 82.5%
+    );
+
+    &:before {
+      position: absolute;
+      display: block;
+      top: 12%;
+      left: 3%;
+      content: url("../images/logoCassette.svg");
+      padding: 3px;
+    }
+
+    &:after {
+      position: absolute;
+      display: block;
+      content: "Делись своей музыкой в Tataria!";
+      font-weight: 700;
+      font-family: "Roboto", sans-serif;
+      font-size: 0.9em;
+      top: 22%;
+      right: 3%;
+      color: $gc;
+    }
+
+    .cutout {
+      width: 70%;
+      height: 46%;
+      position: relative;
+      margin: auto;
+      top: 36%;
+      background: $gc;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 4px $rc;
+
+      &:before {
+        position: absolute;
+        display: block;
+        content: "Зарегистрируйся и начинай удивлять!";
+        color: rgba(white, 0.8);
+        font-size: 0.85em;
+        font-weight: 500;
+        font-family: "Roboto", sans-serif;
+        bottom: -25%;
+      }
+
+      &:after {
+        position: absolute;
+        display: block;
+        content: "116";
+        color: rgba(white, 0.8);
+        font-size: 1.5em;
+        font-weight: bold;
+        top: 100%;
+        right: 0;
+        background: $rc;
+
+        height: 36%;
+        padding: 1.2% 5%;
+        box-shadow: inset 0 0 0 8px $rc;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .reel_hole {
+        position: absolute;
+        background: $wc;
+        width: 20%;
+        top: 15%;
+        border: 3px solid $rc;
+        box-shadow: 0 0 0 3px $gc, 0 0 0 5px $rc;
+        border-radius: 50%;
+        right: 5.5%;
+
+        &:after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+          box-shadow: inset 0 0 0 6px $wc;
+          background: $rc;
+          border-radius: 50%;
+        }
+
+        &:before {
+          position: absolute;
+          display: block;
+          content: "";
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          border-radius: 50%;
+          background: $gc;
+          transform: scale(0.75);
+          z-index: 10;
+        }
+
+        &:first-of-type {
+          left: 5.5%;
+        }
+
+        .gear {
+          position: absolute;
+          width: 14%;
+          height: 86%;
+          background: $gc;
+          top: 50%;
+          left: 50%;
+          margin-left: -7%;
+          margin-top: -43%;
+          box-shadow: 0 0 0 2px $rc;
+          animation: gears $speed linear infinite alternate;
+
+          &:before,
+          &:after {
+            display: block;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: $gc;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 0 2px $rc;
+            transform: rotate(240deg);
+          }
+
+          &:after {
+            transform: rotate(120deg);
+            width: 220%;
+            top: 2%;
+            left: -75%;
+            background: none;
+            box-shadow: -2px -2px 0 0 $rc;
+            background-image: linear-gradient(
+                90deg,
+                $gc calc(50% - 1px),
+                $rc calc(50% - 1px),
+                $rc calc(50% + 1px),
+                $rc calc(50% + 2px)
+              ),
+              linear-gradient($gc calc(100% - 2px), $rc calc(100% - 2px));
+            background-size: 100% 50%, 50% 100%;
+            background-repeat: no-repeat;
+          }
+        }
+
+        @keyframes gears {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(2160deg);
+          }
+        }
+      }
+
+      .window {
+        position: absolute;
+        background: $gc;
+        width: 40%;
+        height: 68%;
+        top: 15%;
+        left: 30%;
+        border: 3px solid $rc;
+        overflow: hidden;
+
+        &:after {
+          display: block;
+          position: absolute;
+          background: linear-gradient(
+            transparent 13%,
+            rgba(white, 0.4) 13%,
+            rgba(white, 0.4) 24%,
+            transparent 24%,
+            transparent 34%,
+            rgba(white, 0.4) 34%,
+            rgba(white, 0.4) 50%,
+            transparent 50%
+          );
+          content: "";
+          width: 100%;
+          height: 100%;
+        }
+
+        .spool {
+          position: absolute;
+          top: -22%;
+          width: 70%;
+          background: $wc;
+          border: 3px solid $rc;
+          border-radius: 50%;
+          box-shadow: 0 0 0 10px lighten($gc, 10), 0 0 0 13px $rc;
+
+          &:after {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+          }
+
+          &:first-of-type {
+            left: -64%;
+            animation: spooling $speed linear infinite alternate;
+          }
+
+          &:last-of-type {
+            right: -64%;
+            animation: spooling $speed linear infinite alternate-reverse;
+          }
+        }
+
+        @keyframes spooling {
+          from {
+            box-shadow: 0 0 0 0.5em lighten($gc, 10),
+              0 0 0 calc(0.5em + 3px) $rc;
+          }
+          to {
+            box-shadow: 0 0 0 5em lighten($gc, 10), 0 0 0 calc(5em + 3px) $rc;
+          }
+        }
+      }
+    }
+  }
+
+  .head {
+    width: 60%;
+    height: 25.5%;
+    position: absolute;
+    margin-left: 20%;
+    bottom: -4%;
+
+    &:before,
+    &:after {
+      display: block;
+      content: "";
+      width: 70%;
+      height: 100%;
+      position: absolute;
+      background: $gc;
+      border: 4px solid $rc;
+      background-image: linear-gradient(
+        rgba(white, 0.1) 0%,
+        rgba(white, 0.1) 100%
+      );
+      background-repeat: no-repeat;
+      background-position: 15% 8%;
+      background-size: 100% 4px;
+    }
+
+    &:before {
+      transform: skew(-15deg);
+      left: -8%;
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      box-shadow: inset 6px 0 0 0 $gc;
+    }
+
+    &:after {
+      transform: skew(15deg);
+      right: -8%;
+      border-left: none;
+      border-radius: 0 10px 10px 0;
+      box-shadow: inset -6px 0 0 0 $gc;
+    }
+  }
+
+  .screw {
+    position: absolute;
+    text-align: right;
+    top: 7%;
+    left: 4%;
+
+    &:before {
+      content: "\20e0\fe0e";
+      font-size: 1.1em;
+      color: $rc;
+      font-weight: bold;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+
+    &.i2 {
+      right: 1%;
+      &:before {
+        transform: rotate(90deg);
+      }
+    }
+
+    &.i3 {
+      bottom: 1%;
+      &:before {
+        transform: rotate(-30deg);
+      }
+    }
+
+    &.i4 {
+      right: 1%;
+      bottom: 1%;
+      &:before {
+        transform: rotate(-90deg);
+      }
+    }
+
+    &.i5 {
+      left: calc(50% + 0.5em);
+      bottom: 9%;
+      &:before {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  .hole {
+    width: 5%;
+    background: $gc;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid $rc;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2.5%;
+
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+
+    &.i1 {
+      bottom: 0%;
+      left: 28%;
+    }
+    &.i2 {
+      bottom: 2%;
+      left: 38%;
+    }
+    &.i3 {
+      bottom: 0%;
+      left: 72%;
+    }
+    &.i4 {
+      bottom: 2%;
+      left: 62%;
+    }
+  }
+}

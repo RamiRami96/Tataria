@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
+import { Col, Form, Row } from "react-bootstrap";
+import clsx from "clsx";
 import {
   IoMdSkipBackward,
   IoIosPlayCircle,
@@ -17,9 +19,12 @@ import {
   setVolume,
 } from "../../store/playerReducer";
 
+import * as styles from "./player.module.scss";
+import { sliceText } from "../../helpers/sliceText";
+
 //компонента проигрывателя
 
-interface IPlayerProps {
+type IPlayerProps = {
   tracks: ITrack[];
   pause: boolean;
   volume: number;
@@ -27,11 +32,11 @@ interface IPlayerProps {
   duration: number;
   currentTime: number;
   mainUrl: string;
-}
+};
 
 let audio: any;
 
-export const Player: React.FC<IPlayerProps> = ({
+export const Player = ({
   tracks,
   pause,
   volume,
@@ -39,13 +44,11 @@ export const Player: React.FC<IPlayerProps> = ({
   duration,
   currentTime,
   mainUrl,
-}) => {
-  // индекс трека, найденный из поиска id всех треков равному id проигрывающему треку
+}: IPlayerProps) => {
   let candidateTrack = tracks.findIndex((track) => track._id === active?._id);
 
   const dispatch = useDispatch();
 
-  // следующий трек
   const onNextAudio = () => {
     if (candidateTrack - 1 < 0) {
       dispatch(setActiveTrack(tracks[tracks.length - 1]));
@@ -54,7 +57,6 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
-  // предыдущий трек
   const onPrevAudio = () => {
     if (candidateTrack < tracks.length - 1) {
       dispatch(setActiveTrack(tracks[candidateTrack + 1]));
@@ -63,7 +65,6 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
-  // настройка ссылки, громкости и длины на трек
   const setAudio = () => {
     if (active) {
       audio.src = `${mainUrl}/audio/${active.audio}`;
@@ -82,39 +83,32 @@ export const Player: React.FC<IPlayerProps> = ({
     }
   };
 
-  // воспроизведение трека
   const onPlay = () => {
     dispatch(playTrack());
     audio.play();
   };
 
-  // пауза трека
   const onPause = () => {
     dispatch(pauseTrack());
     audio.pause();
   };
 
-  // изменение громкости трека
-  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     audio.volume = Number(e.target.value) / 100;
     dispatch(setVolume(Number(e.target.value)));
   };
 
-  // изменение длины трека
   const trackbarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     audio.currentTime = Number(e.target.value);
     dispatch(setCurrentTime(Number(e.target.value)));
   };
 
-  // функция конвертации длины трека в минуты и секунды
   function convertTrackTime(time: number): string {
     let minutes: any = "0" + Math.floor(time / 60);
     let seconds: any = "0" + Math.floor(time - minutes * 60);
     let dur: string | number = minutes.substr(-2) + ":" + seconds.substr(-2);
     return dur;
   }
-
-  // инициализация аудио
 
   useEffect(() => {
     if (!audio) {
@@ -129,54 +123,82 @@ export const Player: React.FC<IPlayerProps> = ({
   return (
     active && (
       <>
-        <div className="row fixed-bottom d-flex justify-content-center player px-3 px-lg-5">
-          <div className=" player__track col-3 d-flex align-items-center">
+        <Row
+          className={clsx(
+            styles.player,
+            "fixed-bottom d-flex justify-content-center py-2 px-3 px-lg-5"
+          )}
+        >
+          <Col xs={4} md={3} className="d-flex align-items-center">
             <img
-              className="d-none d-lg-flex"
+              className={clsx(styles.trackImg, "d-none d-lg-flex")}
               src={`${mainUrl}/image/${active.poster}`}
               alt="poster"
             />
             <div className="d-flex flex-column justify-content-center ms-0 ms-lg-4">
-              <p>{active.artist}</p>
-              <h6>{active.title}</h6>
+              <p className={styles.trackArtist}>{sliceText(active.artist)}</p>
+              <h6 className={styles.trackTitle}>{sliceText(active.title)}</h6>
             </div>
-          </div>
-          <div className="player__controlls col-6 d-flex justify-content-center align-items-center">
-            <IoMdSkipBackward className="backward" onClick={onPrevAudio} />
+          </Col>
+          <Col
+            xs={4}
+            md={6}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <IoMdSkipBackward
+              className={styles.backward}
+              onClick={onPrevAudio}
+            />
             <div>
               {pause ? (
-                <IoIosPlayCircle className="play mx-2" onClick={onPlay} />
+                <IoIosPlayCircle
+                  className={clsx(styles.play, "mx-2")}
+                  onClick={onPlay}
+                />
               ) : (
-                <IoIosPause className="play mx-2" onClick={onPause} />
+                <IoIosPause
+                  className={clsx(styles.play, "mx-2")}
+                  onClick={onPause}
+                />
               )}
             </div>
-            <IoMdSkipForward className="forward" onClick={onNextAudio} />
-          </div>
-          <div className="player__volume col-3 d-flex justify-content-end align-items-center">
-            <IoMdVolumeHigh className="volume me-2" />
-            <input
-              type="range"
-              className="form-range"
+            <IoMdSkipForward className={styles.forward} onClick={onNextAudio} />
+          </Col>
+          <Col
+            xs={4}
+            md={3}
+            className={clsx(
+              styles.volume,
+              "d-flex justify-content-end align-items-center"
+            )}
+          >
+            <IoMdVolumeHigh className={clsx(styles.volume, "me-2")} />
+            <Form.Range
+              className={styles.rangeTrack}
               max={100}
               min={0}
               value={volume}
               onChange={changeVolume}
             />
-          </div>
+          </Col>
 
-          <div className="col-12 col-md-6 player__trackbar d-flex justify-content-center align-items-center">
+          <Col
+            xs={12}
+            md={6}
+            className="d-flex justify-content-center align-items-center"
+          >
             <span className="text-white">{convertTrackTime(currentTime)}</span>
-            <input
-              type="range"
-              className="form-range mx-2"
+            <Form.Range
+              className={clsx(styles.rangeTrack, "mx-2")}
               max={duration}
               min={0}
               value={currentTime}
               onChange={trackbarChange}
             />
+
             <span className="text-white"> {convertTrackTime(duration)}</span>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </>
     )
   );

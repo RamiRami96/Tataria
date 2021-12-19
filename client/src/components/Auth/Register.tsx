@@ -1,15 +1,17 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { Formik, Form, Field } from "formik";
 import { IRegisterForm } from "../../interfaces/interfaces";
 import * as Yup from "yup";
+import { Button, Col, FormControl, FormGroup, Row } from "react-bootstrap";
+import clsx from "clsx";
 
-// компонента регистрации
+import * as styles from "./auth.module.scss";
 
-interface RegisterProps {
-  dispatch: Function;
+type RegisterProps = {
+  dispatch: Dispatch<any>;
   registerUser: Function;
   infoAuthMsg: string;
-}
+};
 
 // валидация полей
 
@@ -26,26 +28,26 @@ const RegisterSchema = Yup.object().shape({
     .required("Поле обязательно!"),
 });
 
+const initialValues: IRegisterForm = {
+  email: "",
+  nickname: "",
+  password: "",
+};
+
 export const Register = ({
   dispatch,
   registerUser,
   infoAuthMsg,
 }: RegisterProps) => {
-  const initialValues: IRegisterForm = {
-    email: "",
-    nickname: "",
-    password: "",
-  };
-
   const handleSubmit = (values: any, { resetForm }: any) => {
     dispatch(registerUser(values));
     resetForm({});
   };
 
   return (
-    <div className="row auth">
-      <div className="col-12 auth__form">
-        <h2>Регистрация</h2>
+    <Row>
+      <Col xs={12} className={styles.form}>
+        <h2 className={clsx(styles.title, "mt-3")}>Регистрация</h2>
         <Formik
           initialValues={initialValues}
           validationSchema={RegisterSchema}
@@ -55,42 +57,68 @@ export const Register = ({
         >
           {({ errors, touched }) => (
             <Form>
-              <div className="group mt-5">
-                <Field id="registeremail" type="email" name="email" required />
-                <span className="highlight"></span>
-                <span className="bar"></span>
-                <label>Почта</label>
-                {errors.email && touched.email ? (
-                  <div className="validate-errors mt-2">{errors.email}</div>
-                ) : null}
-              </div>
-              <div className="group mt-5">
-                <Field id="nickname" type="text" name="nickname" required />
-                <span className="highlight"></span>
-                <span className="bar"></span>
-                <label>Никнейм</label>
-                {errors.nickname && touched.nickname ? (
-                  <div className="validate-errors mt-2">{errors.nickname}</div>
-                ) : null}
-              </div>
-              <div className="group mt-5">
-                <Field
-                  id="registerpassword"
-                  type="password"
-                  name="password"
-                  required
-                />
-                <span className="highlight"></span>
-                <span className="bar"></span>
-                <label>Пароль</label>
-                {errors.password && touched.password ? (
-                  <div className="validate-errors mt-2">{errors.password}</div>
-                ) : null}
-              </div>
+              <Field name="email">
+                {({ field }: any) => (
+                  <FormGroup className="mt-5" controlId={field.name}>
+                    <FormControl
+                      className={styles.input}
+                      type="email"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Почта"
+                      required
+                    />
+                  </FormGroup>
+                )}
+              </Field>
+
+              {errors.email && touched.email ? (
+                <div className="validate-errors mt-2">{errors.email}</div>
+              ) : null}
+
+              <Field name="nickname">
+                {({ field }: any) => (
+                  <FormGroup className="mt-5" controlId={field.name}>
+                    <FormControl
+                      className={styles.input}
+                      type="text"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Никнейм"
+                      required
+                    />
+                  </FormGroup>
+                )}
+              </Field>
+
+              {errors.nickname && touched.nickname ? (
+                <div className="validate-errors mt-2">{errors.nickname}</div>
+              ) : null}
+
+              <Field className={styles.input} type="password" name="password">
+                {({ field }: any) => (
+                  <FormGroup className="mt-5" controlId={field.name}>
+                    <FormControl
+                      className={styles.input}
+                      type="password"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Пароль"
+                      required
+                    />
+                  </FormGroup>
+                )}
+              </Field>
+
+              {errors.password && touched.password ? (
+                <div className="validate-errors mt-2">{errors.password}</div>
+              ) : null}
+
               {infoAuthMsg ? (
                 <div className="validate-errors mt-4">{infoAuthMsg}</div>
               ) : null}
-              <button
+              <Button
+                variant="outline-danger"
                 disabled={
                   errors.email
                     ? true
@@ -103,14 +131,15 @@ export const Register = ({
                     : false
                 }
                 type="submit"
-                className="btn btn-outline-danger form-btn w-100 mt-5"
+                size="lg"
+                className={clsx(styles.btn, " w-100 mt-5")}
               >
                 Зарегистрироваться
-              </button>
+              </Button>
             </Form>
           )}
         </Formik>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

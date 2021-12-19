@@ -2,6 +2,8 @@ import { trackAPI } from "../api/api";
 
 import { Dispatch } from "redux";
 import { ITracks, ITrack, IAction } from "../interfaces/interfaces";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "./store";
 
 // редьюсер треков
 
@@ -20,6 +22,8 @@ enum TrackActionType {
   INFORM_TRACK = "INFORM_TRACK",
   LOAD_TRACK = "LOAD_TRACK",
 }
+
+type ThunkType = ThunkAction<void, RootState, unknown, IAction>;
 
 export const trackReducer = (
   state = initialState,
@@ -106,17 +110,19 @@ const loadData = (isLoading: boolean) => ({
   payload: isLoading,
 });
 
-export const setTracks = () => async (dispatch: Dispatch<IAction>) => {
-  try {
-    const { data } = await trackAPI.getTracks();
-    dispatch(setTracksAction(data));
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const setTracks =
+  (): ThunkType => async (dispatch: Dispatch<IAction>) => {
+    try {
+      const { data } = await trackAPI.getTracks();
+      dispatch(setTracksAction(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const createTrack =
-  (formData: ITrack) => async (dispatch: Dispatch<IAction>) => {
+  (formData: ITrack): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       dispatch(loadData(true));
       const { data } = await trackAPI.createTrack(formData);
@@ -129,7 +135,8 @@ export const createTrack =
   };
 
 export const likeTrack =
-  (id: number) => async (dispatch: Dispatch<IAction>) => {
+  (id: number): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       dispatch(loadData(true));
       const { data } = await trackAPI.likeTrack(id);
@@ -141,7 +148,8 @@ export const likeTrack =
   };
 
 export const unLikeTrack =
-  (id: number) => async (dispatch: Dispatch<IAction>) => {
+  (id: number): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       dispatch(loadData(true));
       const { data } = await trackAPI.unLikeTrack(id);
@@ -153,7 +161,8 @@ export const unLikeTrack =
   };
 
 export const deleteTrack =
-  (id: number) => async (dispatch: Dispatch<IAction>) => {
+  (id: number): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       const { data } = await trackAPI.deleteTrack(id);
       dispatch(deleteTrackAction(data));

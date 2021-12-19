@@ -1,0 +1,53 @@
+.player {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  box-shadow: 0px 1px 4px rgba(255, 255, 255, 0.5);
+  height: 16vh;
+  z-index: 999;
+}
+
+.trackImg {
+  object-fit: contain;
+  object-position: center;
+  height: 40px;
+  width: 40px;
+}
+.trackArtist {
+  margin-bottom: 0.2rem;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+}
+.trackTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+
+  @media screen and (min-width: 960px) {
+    font-size: 18px;
+  }
+}
+
+.backward,
+.forward,
+.heart,
+.sync {
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+.play {
+  font-size: 48px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.volume {
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+.rangeTrack {
+  box-shadow: none;
+  background: none !important;
+}

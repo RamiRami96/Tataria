@@ -1,14 +1,15 @@
-import React from "react";
+import clsx from "clsx";
+import React, { Dispatch } from "react";
 import { useEffect } from "react";
+import { Col, Row, Table } from "react-bootstrap";
 import { IoMdHeart, IoMdMusicalNotes } from "react-icons/io";
 import { ITrack, IUser } from "../../interfaces/interfaces";
 import { ChartItem } from "./ChartItem";
-import eq from "./eq.gif";
 
-// компонента чарта
+import * as styles from "./chart.module.scss";
 
-interface IChartProps {
-  dispatch: Function;
+type ChartProps = {
+  dispatch: Dispatch<any>;
   setTracks: Function;
   likeTrack: Function;
   unLikeTrack: Function;
@@ -19,9 +20,9 @@ interface IChartProps {
   playTrack: Function;
   setActiveTrack: Function;
   mainUrl: string;
-}
+};
 
-export const Chart: React.FC<IChartProps> = React.memo(
+export const Chart = React.memo(
   ({
     dispatch,
     setTracks,
@@ -34,36 +35,27 @@ export const Chart: React.FC<IChartProps> = React.memo(
     playTrack,
     setActiveTrack,
     mainUrl,
-  }) => {
+  }: ChartProps) => {
     useEffect(() => {
       dispatch(setTracks());
     }, [dispatch, setTracks]);
 
     return (
-      <div className="row mt-5 chart">
-        <div className="col-12 col-lg-6 left-side">
-          <h1>Чарт</h1>
-
+      <Row className={clsx(styles.chart, "mt-5")}>
+        <Col xs={12} lg={6} className={styles.table}>
+          <h2 className={styles.title}>Чарт</h2>
           {tracks?.length ? (
-            <table className="table mt-4">
+            <Table className=" mt-4">
               <thead>
                 <tr>
-                  <th scope="col" className="head">
-                    #
-                  </th>
-                  <th scope="col" className="head">
-                    Постер
-                  </th>
-                  <th scope="col" className="head">
-                    Артист
-                  </th>
-                  <th scope="col" className="head">
-                    Трек
-                  </th>
-                  <th scope="col" className="head">
+                  <th className={styles.head}>#</th>
+                  <th className={styles.head}>Постер</th>
+                  <th className={styles.head}>Артист</th>
+                  <th className={styles.head}>Трек</th>
+                  <th className={styles.head}>
                     <IoMdHeart />
                   </th>
-                  <th scope="col" className="head">
+                  <th className={styles.head}>
                     <IoMdMusicalNotes />
                   </th>
                 </tr>
@@ -87,37 +79,36 @@ export const Chart: React.FC<IChartProps> = React.memo(
                       playTrack={playTrack}
                       setActiveTrack={setActiveTrack}
                       mainUrl={mainUrl}
-                      eq={eq}
                     />
                   ))}
               </tbody>
-            </table>
+            </Table>
           ) : (
             <h4 className="text-white font-weight-bold mt-2">Загрузка...</h4>
           )}
-        </div>
-        <div className="col-12 col-lg-6 right-side">
-          <h1>Новое</h1>
+        </Col>
+        <Col xs={12} lg={6} className={styles.table}>
+          <h2 className={styles.title}>Новое</h2>
           {tracks?.length ? (
-            <table className="table mt-4">
+            <Table className=" mt-4">
               <thead>
                 <tr>
-                  <th scope="col" className="head">
+                  <th scope="col" className={styles.head}>
                     #
                   </th>
-                  <th scope="col" className="head">
+                  <th scope="col" className={styles.head}>
                     Постер
                   </th>
-                  <th scope="col" className="head">
+                  <th scope="col" className={styles.head}>
                     Артист
                   </th>
-                  <th scope="col" className="head">
+                  <th scope="col" className={styles.head}>
                     Трек
                   </th>
-                  <th scope="col" className="head">
+                  <th scope="col" className={styles.head}>
                     <IoMdHeart />
                   </th>
-                  <th scope="col" className="head">
+                  <th className={styles.head}>
                     <IoMdMusicalNotes />
                   </th>
                 </tr>
@@ -140,16 +131,15 @@ export const Chart: React.FC<IChartProps> = React.memo(
                       playTrack={playTrack}
                       setActiveTrack={setActiveTrack}
                       mainUrl={mainUrl}
-                      eq={eq}
                     />
                   ))}
               </tbody>
-            </table>
+            </Table>
           ) : (
             <h4 className="text-white font-weight-bold mt-2">Загрузка...</h4>
           )}
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   }
 );

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import clsx from "clsx";
 import { ITrack, IUser } from "../../interfaces/interfaces";
 import { IoIosHeart, IoIosHeartEmpty, IoIosPlay } from "react-icons/io";
+import eq from "./images/eq.gif";
 
-// компонента трека из чарта
+import * as styles from "./chart.module.scss";
+import { sliceText } from "../../helpers/sliceText";
 
-interface IChartItemProps {
+type ChartItemProps = {
   setTracks: Function;
   track: ITrack;
   index: number;
@@ -17,10 +20,9 @@ interface IChartItemProps {
   setActiveTrack: Function;
   unLikeTrack: Function;
   mainUrl: string;
-  eq: string;
-}
+};
 
-export const ChartItem: React.FC<IChartItemProps> = ({
+export const ChartItem = ({
   setTracks,
   track,
   index,
@@ -33,26 +35,16 @@ export const ChartItem: React.FC<IChartItemProps> = ({
   setActiveTrack,
   playTrack,
   mainUrl,
-  eq,
-}) => {
+}: ChartItemProps) => {
   const [anime, setAnime] = useState(false);
-  //проверка был ли поставлен лайк пользователем
 
   let isLiked = track.likes.some((like) => like === user.id);
-
-  // проигрывание трека
 
   const play = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(setActiveTrack(track));
     dispatch(playTrack());
   };
-
-  // функция при которой после 10-ти букв в предложении ставится троеточие
-
-  function sliceText(text: string): string {
-    return text.length > 10 ? text.slice(0, 10).toString() + "..." : text;
-  }
 
   const onUnLike = () => {
     setAnime(true);
@@ -69,7 +61,7 @@ export const ChartItem: React.FC<IChartItemProps> = ({
   return (
     <>
       <tr>
-        <th scope="row">{index + 1}</th>
+        <th>{index + 1}</th>
         <td>
           <img src={`${mainUrl}/image/${track.poster}`} alt="poster" />
         </td>
@@ -80,7 +72,9 @@ export const ChartItem: React.FC<IChartItemProps> = ({
             {isLiked ? (
               <IoIosHeart
                 className={
-                  anime ? "me-1  like-icon animate-icon" : "me-1  like-icon"
+                  anime
+                    ? clsx(styles.likeIcon, styles.animateIcon, "me-1")
+                    : clsx(styles.likeIcon, "me-1")
                 }
                 onAnimationEnd={() => {
                   setAnime(false);
@@ -90,7 +84,9 @@ export const ChartItem: React.FC<IChartItemProps> = ({
             ) : isAuth ? (
               <IoIosHeartEmpty
                 className={
-                  anime ? "me-1  like-icon animate-icon" : "me-1  like-icon"
+                  anime
+                    ? clsx(styles.likeIcon, styles.animateIcon, "me-1")
+                    : clsx(styles.likeIcon, "me-1")
                 }
                 onAnimationEnd={() => {
                   setAnime(false);
@@ -98,7 +94,7 @@ export const ChartItem: React.FC<IChartItemProps> = ({
                 onClick={onLike}
               />
             ) : (
-              <IoIosHeartEmpty className={"me-1  like-icon "} />
+              <IoIosHeartEmpty className={clsx(styles.likeIcon, "me-1")} />
             )}
 
             {track.likes.length}
@@ -106,9 +102,9 @@ export const ChartItem: React.FC<IChartItemProps> = ({
         </td>
         <td>
           {active === track ? (
-            <img src={eq} className="eq" alt="eq" />
+            <img src={eq} className={styles.eq} alt="eq" />
           ) : (
-            <IoIosPlay className="play-icon" onClick={play} />
+            <IoIosPlay className={styles.playIcon} onClick={play} />
           )}
         </td>
       </tr>

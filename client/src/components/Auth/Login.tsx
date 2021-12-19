@@ -1,28 +1,30 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { Formik, Form, Field } from "formik";
 import { ILoginForm } from "../../interfaces/interfaces";
+import { Button, Col, FormControl, FormGroup, Row } from "react-bootstrap";
+import clsx from "clsx";
 
-//компонетнта логинизации
+import * as styles from "./auth.module.scss";
 
-interface LoginProps {
-  dispatch: Function;
+type LoginProps = {
+  dispatch: Dispatch<any>;
   loginUser: Function;
   infoAuthMsg: string;
-}
+};
+
+const initialValues: ILoginForm = {
+  email: "",
+  password: "",
+};
 
 export const Login = ({ dispatch, loginUser, infoAuthMsg }: LoginProps) => {
-  const initialValues: ILoginForm = {
-    email: "",
-    password: "",
-  };
-
   const handleSubmit = (values: any, actions: any) => {
     dispatch(loginUser(values));
   };
   return (
-    <div className="row auth">
-      <div className="col-12 auth__form">
-        <h2>Войти</h2>
+    <Row>
+      <Col xs={12} className={styles.form}>
+        <h2 className={clsx(styles.title, "mt-3")}>Войти</h2>
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
@@ -30,35 +32,50 @@ export const Login = ({ dispatch, loginUser, infoAuthMsg }: LoginProps) => {
           }}
         >
           <Form>
-            <div className="group mt-5">
-              <Field id="loginemail" type="email" name="email" required />
-              <span className="highlight"></span>
-              <span className="bar"></span>
-              <label>Почта</label>
-            </div>
-            <div className="group mt-5">
-              <Field
-                id="loginpassword"
-                type="password"
-                name="password"
-                required
-              />
-              <span className="highlight"></span>
-              <span className="bar"></span>
-              <label>Пароль</label>
-            </div>
+            <Field name="email">
+              {({ field }: any) => (
+                <FormGroup className="mt-5" controlId={field.name}>
+                  <FormControl
+                    className={styles.input}
+                    type="email"
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Почта"
+                    required
+                  />
+                </FormGroup>
+              )}
+            </Field>
+
+            <Field name="password">
+              {({ field }: any) => (
+                <FormGroup className="mt-5" controlId={field.name}>
+                  <FormControl
+                    className={styles.input}
+                    type="password"
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Пароль"
+                    required
+                  />
+                </FormGroup>
+              )}
+            </Field>
+
             {infoAuthMsg ? (
               <div className="validate-errors mt-4">{infoAuthMsg}</div>
             ) : null}
-            <button
+            <Button
+              variant="outline-danger"
               type="submit"
-              className="btn btn-outline-danger form-btn w-100 mt-5"
+              size="lg"
+              className={clsx(styles.btn, "w-100 mt-5")}
             >
               Войти
-            </button>
+            </Button>
           </Form>
         </Formik>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

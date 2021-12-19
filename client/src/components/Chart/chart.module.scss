@@ -1,0 +1,88 @@
+$rc: #fa255e;
+
+.chart {
+  padding-top: 15vh;
+}
+
+.table {
+  height: 65vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    position: absolute;
+    z-index: 999;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $rc;
+    outline: 1px solid $rc;
+  }
+}
+
+.head {
+  position: sticky;
+  top: 32px;
+  background: #000;
+}
+
+.title {
+  position: sticky;
+  top: 0;
+  background: #000;
+  color: #fff;
+  font-weight: 900;
+}
+
+.eq {
+  width: 20px;
+  height: 20px;
+}
+
+.likeIcon {
+  font-size: 20px;
+  color: $rc;
+  cursor: pointer;
+}
+
+.playIcon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.animateIcon {
+  animation: wiggle 2s 1;
+}
+
+@keyframes wiggle {
+  0%,
+  7% {
+    transform: rotateZ(0) scale(1);
+  }
+  15% {
+    transform: rotateZ(-15deg) scale(1.25);
+  }
+  20% {
+    transform: rotateZ(10deg) scale(1.5);
+  }
+  25% {
+    transform: rotateZ(-10deg) scale(1.75);
+  }
+  30% {
+    transform: rotateZ(6deg) scale(1.5);
+  }
+  35% {
+    transform: rotateZ(-4deg) scale(1.25);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0) scale(1);
+  }
+}

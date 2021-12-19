@@ -1,0 +1,45 @@
+.header {
+  background-color: #000;
+}
+
+.mobile {
+  background: #000 !important;
+}
+.menuIcon {
+  font-size: 32px;
+  color: #fff;
+  margin-top: 0.5rem;
+}
+.menuLink {
+  list-style: none;
+  margin-top: 1rem;
+  a {
+    color: #fa255e;
+    font-weight: 500;
+    padding-bottom: 0.5rem;
+    text-decoration: none;
+    transition: 0.3s linear;
+    border: 1px solid transparent;
+    &:hover {
+      color: #fa255e;
+    }
+  }
+}
+
+.menuList {
+  color: #fa255e;
+  font-weight: 500;
+  margin-right: 1rem;
+  padding-bottom: 0.5rem;
+  text-decoration: none;
+  transition: 0.3s linear;
+  border: 1px solid transparent;
+  &:hover {
+    color: #fa255e;
+    border-bottom: 1px solid #fa255e;
+  }
+}
+
+.activeList {
+  border-bottom: 1px solid #fa255e;
+}

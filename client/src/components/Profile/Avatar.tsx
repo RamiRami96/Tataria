@@ -1,30 +1,31 @@
+import clsx from "clsx";
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 import { IoIosCloudDownload } from "react-icons/io";
 import { IUser } from "../../interfaces/interfaces";
 
-//компонента загрузки аватара
+import * as styles from "./profile.module.scss";
 
-interface IAvatar {
+type AvatarProps = {
   mainUrl: string;
   dispatch: Function;
   uploadAvatar: Function;
   refreshUser: Function;
   user: IUser;
-}
+};
 
-export const Avatar: React.FC<IAvatar> = ({
+export const Avatar = ({
   mainUrl,
   dispatch,
   uploadAvatar,
   refreshUser,
   user,
-}) => {
+}: AvatarProps) => {
   const [avatar, setAvatar] = useState({} as File);
   const handleChange = (avatarFile: File) => {
     setAvatar(avatarFile);
   };
 
-  // загрузка аватара
   const uploadAvatarBtn = async () => {
     let formData = new FormData();
     formData.append("avatar", avatar as Blob);
@@ -32,13 +33,15 @@ export const Avatar: React.FC<IAvatar> = ({
     setAvatar({} as File);
     await dispatch(refreshUser());
   };
+
   return (
     <>
       <div className="d-flex flex-column">
-        <div className="avatar-upload">
-          <div className="avatar-edit">
-            <IoIosCloudDownload />
+        <div className={styles.avatarUpload}>
+          <div className={styles.avatarEdit}>
+            <IoIosCloudDownload className={styles.avatarIcon} />
             <input
+              className={styles.avatarInput}
               type="file"
               id="imageUpload"
               accept=".png, .jpg, .jpeg"
@@ -46,8 +49,8 @@ export const Avatar: React.FC<IAvatar> = ({
             />
             <label htmlFor="imageUpload"></label>
           </div>
-
           <img
+            className={styles.avatar}
             src={
               avatar.name
                 ? URL.createObjectURL(avatar)
@@ -57,12 +60,13 @@ export const Avatar: React.FC<IAvatar> = ({
           />
         </div>
         {avatar.name && (
-          <button
-            className="btn btn-outline-danger form-btn w-100 mt-2"
+          <Button
+            className={clsx(styles.profileBtn, "w-100 mt-2")}
+            variant="danger"
             onClick={uploadAvatarBtn}
           >
             Сохранить
-          </button>
+          </Button>
         )}
       </div>
     </>

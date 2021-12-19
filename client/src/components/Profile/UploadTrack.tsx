@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import clsx from "clsx";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import {
@@ -7,30 +9,37 @@ import {
   IoIosCheckmarkCircleOutline,
 } from "react-icons/io";
 import { IFile } from "../../interfaces/interfaces";
+import { Button, FormControl, FormGroup, Modal } from "react-bootstrap";
 
-// компонента загрузки трека
+import * as styles from "./profile.module.scss";
 
-interface IUploadProps {
+type IUploadProps = {
   dispatch: Function;
   createTrack: Function;
   refreshUser: Function;
   setTracks: Function;
   infoTrackMsg: string;
   trackLoading: boolean;
-}
+  showUpload: boolean;
+  handleCloseUpload: Function;
+};
 
-interface IValuesState {
+type IValuesState = {
   title: string;
   poster: object;
   audio: object;
-}
+};
+
+const initialValues: IValuesState = {
+  title: "",
+  poster: {},
+  audio: {},
+};
 
 enum PosterFormats {
   jpeg = "image/jpeg",
   png = "image/png",
 }
-
-// функция проверка на тип изображения
 
 function checkIfPosterIsCorrectType(file?: IFile): boolean {
   if (file?.type === undefined) {
@@ -47,8 +56,6 @@ function checkIfPosterIsCorrectType(file?: IFile): boolean {
   }
 }
 
-// функция проверка на тип аудио
-
 function checkIfAudioIsCorrectType(file?: IFile): boolean {
   if (file?.type === undefined) {
     return true;
@@ -60,8 +67,6 @@ function checkIfAudioIsCorrectType(file?: IFile): boolean {
     }
   }
 }
-
-// валидация загрузки трека
 
 const uploadSchema = Yup.object().shape({
   title: Yup.string().required("Поле обязательно!"),
@@ -81,19 +86,20 @@ const uploadSchema = Yup.object().shape({
     ),
 });
 
-export const UploadTrack: React.FC<IUploadProps> = ({
+export const UploadTrack = ({
   dispatch,
   createTrack,
   refreshUser,
   setTracks,
   infoTrackMsg,
   trackLoading,
-}) => {
+  showUpload,
+  handleCloseUpload,
+}: IUploadProps) => {
   const [fileValue, setFileValue] = useState({ poster: false, audio: false });
 
-  // функция изменяющее состояние постера или аудио в зависимости от выбранного поля
   const changeField = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     changeFunc: Function,
     field: string
   ) => {
@@ -107,8 +113,6 @@ export const UploadTrack: React.FC<IUploadProps> = ({
     changeFunc(field, event.currentTarget.files![0]);
   };
 
-  // загрузка трека с последующим обновлением состояния треков
-
   const handleSubmit = async (values: any, { resetForm }: any) => {
     let formData = new FormData();
     formData.append("title", values.title);
@@ -119,176 +123,159 @@ export const UploadTrack: React.FC<IUploadProps> = ({
     await dispatch(setTracks());
     setFileValue({ ...fileValue, poster: false, audio: false });
     resetForm({});
-  };
-
-  const initialValues: IValuesState = {
-    title: "",
-    poster: {},
-    audio: {},
+    handleCloseUpload();
   };
 
   return (
     <>
-      <div
-        className="modal fade profile__form"
-        id="exampleModal"
-        tabIndex={-1}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered ">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body ">
-              <Formik
-                initialValues={initialValues}
-                validationSchema={uploadSchema}
-                onSubmit={(values, actions) => {
-                  handleSubmit(values, actions);
-                }}
-              >
-                {({ errors, touched, setFieldValue }) => (
-                  <Form>
-                    <div className="group ">
-                      <Field
-                        id="title"
-                        type="text"
-                        name="title"
-                        className="input-text"
-                        required
-                      />
-                      <span className="highlight"></span>
-                      <span className="bar"></span>
-                      <label>Название</label>
-                      {errors.title && touched.title ? (
-                        <div className="validate-errors mt-2">
-                          {errors.title}
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className="form-group mt-4">
-                      <input
-                        id="poster"
-                        className="input-file"
-                        type="file"
-                        name="poster"
-                        onChange={(event) => {
-                          changeField(event, setFieldValue, "poster");
-                        }}
-                        accept="image/jpeg,image/png,image/"
-                        required
-                      />
-                      <label
-                        htmlFor="poster"
-                        className={
-                          fileValue.poster && !errors.poster
-                            ? "btn btn-tertiary js-labelFile has-file"
-                            : "btn btn-tertiary js-labelFile"
-                        }
-                      >
-                        {fileValue.poster && !errors.poster ? (
-                          <>
-                            <IoIosCheckmarkCircleOutline className="me-2" />
-                            <span className="js-fileName">Постер загружен</span>
-                          </>
-                        ) : (
-                          <>
-                            <IoMdImages className="me-2" />
-                            <span className="js-fileName">
-                              Загрузить постер
-                            </span>
-                          </>
-                        )}
-                      </label>
-                      {errors.poster ? (
-                        <div className="validate-errors mt-2">
-                          {errors.poster}
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className="form-group mt-4">
-                      <input
-                        id="audio"
-                        className="input-file"
-                        type="file"
-                        name="audio"
-                        onChange={(event) => {
-                          changeField(event, setFieldValue, "audio");
-                        }}
-                        accept=".mp3"
-                        required
-                      />
-                      <label
-                        htmlFor="audio"
-                        className={
-                          fileValue.audio && !errors.audio
-                            ? "btn btn-tertiary js-labelFile has-file"
-                            : "btn btn-tertiary js-labelFile"
-                        }
-                      >
-                        {fileValue.audio && !errors.audio ? (
-                          <>
-                            <IoIosCheckmarkCircleOutline className="me-2" />
-                            <span className="js-fileName">Трек загружен</span>
-                          </>
-                        ) : (
-                          <>
-                            <IoIosMusicalNotes className="me-2" />
-                            <span className="js-fileName">Загрузить трек </span>
-                          </>
-                        )}
-                      </label>
-                      {errors.audio ? (
-                        <div className="validate-errors mt-2">
-                          {errors.audio}
-                        </div>
-                      ) : null}
-                    </div>
+      <Modal show={showUpload} onHide={handleCloseUpload} centered>
+        <Modal.Header closeButton />
 
-                    {infoTrackMsg ? (
-                      <div className="validate-errors mt-2">{infoTrackMsg}</div>
-                    ) : null}
-                    {trackLoading ? (
-                      <button
-                        disabled
-                        type="submit"
-                        className="btn btn-outline-danger form-btn w-100 mt-5"
-                      >
-                        Подождите...
-                      </button>
+        <Modal.Body>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={uploadSchema}
+            onSubmit={(values, actions) => {
+              handleSubmit(values, actions);
+            }}
+          >
+            {({ errors, touched, setFieldValue }) => (
+              <Form>
+                <Field name="title" required>
+                  {({ field }: any) => (
+                    <FormGroup className="mt-5">
+                      <FormControl
+                        id="title"
+                        className={styles.input}
+                        type="text"
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Название"
+                        required
+                      />
+                    </FormGroup>
+                  )}
+                </Field>
+                {errors.title && touched.title ? (
+                  <div className="validate-errors mt-2">{errors.title}</div>
+                ) : null}
+
+                <FormGroup className=" mt-4">
+                  <input
+                    id="poster"
+                    className={styles.inputFile}
+                    type="file"
+                    name="poster"
+                    onChange={(event) => {
+                      changeField(event, setFieldValue, "poster");
+                    }}
+                    accept="image/jpeg,image/png,image/"
+                    required
+                  />
+                  <label
+                    htmlFor="poster"
+                    className={
+                      fileValue.poster && !errors.poster
+                        ? clsx(
+                            styles.labelFile,
+                            styles.hasFile,
+                            "btn btn-tertiary"
+                          )
+                        : clsx(styles.labelFile, "btn btn-tertiary")
+                    }
+                  >
+                    {fileValue.poster && !errors.poster ? (
+                      <>
+                        <IoIosCheckmarkCircleOutline className="me-2" />
+                        <span>Постер загружен</span>
+                      </>
                     ) : (
-                      <button
-                        disabled={
-                          errors.title
-                            ? true
-                            : false && errors.poster
-                            ? true
-                            : false && errors.audio
-                            ? true
-                            : false && infoTrackMsg.length > 0
-                            ? true
-                            : false
-                        }
-                        type="submit"
-                        className="btn btn-outline-danger form-btn w-100 mt-5"
-                      >
-                        Загрузить
-                      </button>
+                      <>
+                        <IoMdImages className="me-2" />
+                        <span>Загрузить постер</span>
+                      </>
                     )}
-                  </Form>
+                  </label>
+                  {errors.poster ? (
+                    <div className="validate-errors mt-2">{errors.poster}</div>
+                  ) : null}
+                </FormGroup>
+                <FormGroup className=" mt-4">
+                  <input
+                    id="audio"
+                    className={styles.inputFile}
+                    type="file"
+                    name="audio"
+                    onChange={(event) => {
+                      changeField(event, setFieldValue, "audio");
+                    }}
+                    accept=".mp3"
+                    required
+                  />
+                  <label
+                    htmlFor="audio"
+                    className={
+                      fileValue.audio && !errors.audio
+                        ? clsx(
+                            styles.labelFile,
+                            styles.hasFile,
+                            "btn btn-tertiary"
+                          )
+                        : clsx(styles.labelFile, "btn btn-tertiary")
+                    }
+                  >
+                    {fileValue.audio && !errors.audio ? (
+                      <>
+                        <IoIosCheckmarkCircleOutline className="me-2" />
+                        <span>Трек загружен</span>
+                      </>
+                    ) : (
+                      <>
+                        <IoIosMusicalNotes className="me-2" />
+                        <span>Загрузить трек </span>
+                      </>
+                    )}
+                  </label>
+                  {errors.audio ? (
+                    <div className="validate-errors mt-2">{errors.audio}</div>
+                  ) : null}
+                </FormGroup>
+
+                {infoTrackMsg ? (
+                  <div className="validate-errors mt-2">{infoTrackMsg}</div>
+                ) : null}
+                {trackLoading ? (
+                  <Button
+                    disabled
+                    className={clsx(styles.profileBtn, "w-100 mt-5")}
+                  >
+                    Подождите...
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline-danger"
+                    disabled={
+                      errors.title
+                        ? true
+                        : false && errors.poster
+                        ? true
+                        : false && errors.audio
+                        ? true
+                        : false && infoTrackMsg.length > 0
+                        ? true
+                        : false
+                    }
+                    type="submit"
+                    className={clsx(styles.profileBtn, "w-100 mt-5")}
+                  >
+                    Загрузить
+                  </Button>
                 )}
-              </Formik>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Form>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

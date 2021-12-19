@@ -1,0 +1,298 @@
+$bc: #000;
+$gc: #181818;
+$wc: #fff;
+$rc: #fa255e;
+$grc: #01e3a5;
+
+.profile {
+  padding-top: 15vh;
+}
+
+.title {
+  color: $wc !important;
+  font-weight: 900;
+}
+
+.deleteIcon {
+  cursor: pointer;
+  font-size: 20px;
+  color: $rc;
+}
+
+.chat {
+  position: relative;
+  height: 480px;
+  width: 100%;
+  border-radius: 15px !important;
+  border: 1px solid $rc !important;
+  background-color: $bc !important;
+}
+
+.chatHeader {
+  border-radius: 15px 15px 0 0 !important;
+  border-bottom: 1px solid $rc !important;
+  padding: 10px 20px;
+}
+
+.chatBody {
+  overflow-y: auto;
+  padding: 20px;
+  height: 48vh;
+  &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    position: absolute;
+    z-index: 999;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $rc;
+    outline: 1px solid $rc;
+  }
+}
+
+.chatFooter {
+  width: 100%;
+  padding: 0 20px;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 15px 15px !important;
+  border-top: 0 !important;
+}
+
+.msgInput {
+  border-radius: 15px !important;
+  background: $bc !important;
+  border: none !important;
+  color: white !important;
+  height: 50px !important;
+  -webkit-box-shadow: inset 0 0 0 50px $bc;
+  box-shadow: inset 0 0 0 50px $bc;
+  -webkit-appearance: none;
+  -webkit-text-fill-color: $wc;
+  height: 60px;
+  &:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+  }
+}
+
+.msgBtn {
+  background-color: $bc !important;
+  border: 0 !important;
+  height: 60px;
+}
+
+.msgContainer {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  border-radius: 25px;
+  background-color: $rc;
+  color: $wc;
+  font-weight: 500;
+  padding: 20px;
+  position: relative;
+}
+
+.msg {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+  border-radius: 25px;
+  background-color: $grc;
+  color: $bc;
+  font-weight: 500;
+  padding: 10px;
+  position: relative;
+}
+
+.msgAvatar {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid #f5f6fa;
+}
+
+.table {
+  height: 35vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+    position: absolute;
+    z-index: 999;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $rc;
+    outline: 1px solid $rc;
+  }
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  background: $bc;
+}
+
+.avatarUpload {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.avatarEdit {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  top: 0;
+
+  &:hover {
+    label {
+      opacity: 0.3;
+    }
+    svg {
+      opacity: 0.9;
+    }
+  }
+}
+
+.avatarIcon {
+  position: absolute;
+  font-size: 100px;
+  top: 25px;
+  left: 25px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  color: $rc;
+}
+
+.avatarInput {
+  display: none;
+  opacity: 0;
+  + label {
+    opacity: 0;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: $bc;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.avatar {
+  object-fit: cover;
+  object-position: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  border: 2px solid $rc;
+  transition: all 0.3s ease;
+}
+
+.nickSubtitle {
+  color: $wc !important;
+  font-weight: 500;
+}
+
+.nickTitle {
+  color: $wc !important;
+  font-weight: 700;
+}
+
+.formTitle {
+  color: $wc;
+  font-weight: 700;
+}
+
+.input {
+  background: none !important;
+  border: 1px solid $rc !important;
+  color: $wc !important;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px 20px;
+  height: 55px;
+  color: #fff !important;
+  -webkit-box-shadow: inset 0 0 0 50px #000 !important;
+  box-shadow: inset 0 0 0 50px #000 !important;
+  -webkit-text-fill-color: #fff !important;
+  &:focus,
+  &:active {
+    border-color: $rc !important;
+  }
+}
+
+.formBtn {
+  color: $rc;
+  font-size: 18px;
+  padding: 0;
+  line-height: 40px;
+  margin: auto;
+  display: block;
+  border: 2px solid $rc;
+}
+
+.inputFile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.labelFile {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 10px;
+  cursor: pointer;
+  color: $wc !important;
+
+  svg {
+    font-size: 20px;
+    color: $rc;
+  }
+}
+
+.hasFile {
+  color: $grc;
+  border: 2px solid $grc;
+  svg {
+    filter: invert(63%) sepia(84%) saturate(1522%) hue-rotate(115deg)
+      brightness(97%) contrast(106%);
+  }
+}
+
+.profileBtn {
+  border: 1px solid $rc;
+  color: $rc;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 10px 20px;
+  height: 45px;
+
+  &:hover {
+    background-color: $rc;
+    color: $wc;
+  }
+}

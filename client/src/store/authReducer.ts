@@ -7,6 +7,8 @@ import {
   IUser,
 } from "../interfaces/interfaces";
 import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "./store";
 
 // редьюсер авторизации
 
@@ -23,6 +25,8 @@ enum AuthActionType {
   LOAD_USER_DATA = "LOAD_USER_DATA",
   LOGOUT = "LOGOUT",
 }
+
+type ThunkType = ThunkAction<void, RootState, unknown, IAction>;
 
 export const authReducer = (state = initialState, action: IAction): IAuth => {
   switch (action.type) {
@@ -61,7 +65,8 @@ export const informUser = (data: string) => ({
 });
 
 export const registerUser =
-  (regData: IRegisterForm) => async (dispatch: Dispatch<IAction>) => {
+  (regData: IRegisterForm): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       dispatch(loadData(true));
       const { data } = await authAPI.register(regData);
@@ -73,7 +78,8 @@ export const registerUser =
   };
 
 export const loginUser =
-  (logData: ILoginForm) => async (dispatch: Dispatch<IAction>) => {
+  (logData: ILoginForm): ThunkType =>
+  async (dispatch: Dispatch<IAction>) => {
     try {
       dispatch(loadData(true));
       const { data } = await authAPI.login(logData);
@@ -90,27 +96,29 @@ export const loginUser =
     }
   };
 
-export const authUser = () => async (dispatch: Dispatch<IAction>) => {
-  try {
-    dispatch(loadData(true));
-    const { data } = await authAPI.auth();
-    dispatch(setUser(data.user));
-    localStorage.setItem("token", data.token);
-    dispatch(loadData(false));
-  } catch (error) {
-    console.log(error);
-    dispatch(loadData(false));
-  }
-};
+export const authUser =
+  (): ThunkType => async (dispatch: Dispatch<IAction>) => {
+    try {
+      dispatch(loadData(true));
+      const { data } = await authAPI.auth();
+      dispatch(setUser(data.user));
+      localStorage.setItem("token", data.token);
+      dispatch(loadData(false));
+    } catch (error) {
+      console.log(error);
+      dispatch(loadData(false));
+    }
+  };
 
-export const refreshUser = () => async (dispatch: Dispatch<IAction>) => {
-  try {
-    const { data } = await authAPI.auth();
-    dispatch(setUser(data.user));
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const refreshUser =
+  (): ThunkType => async (dispatch: Dispatch<IAction>) => {
+    try {
+      const { data } = await authAPI.auth();
+      dispatch(setUser(data.user));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const uploadAvatar = async (avatar: object) => {
   await userAPI.uploadAvatar(avatar);

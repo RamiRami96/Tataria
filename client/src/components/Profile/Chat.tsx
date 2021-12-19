@@ -3,9 +3,11 @@ import { Formik, Form, Field } from "formik";
 import { IMessage, IUser } from "../../interfaces/interfaces";
 import { IoMdSend } from "react-icons/io";
 
-// компонента чата
+import * as styles from "./profile.module.scss";
+import clsx from "clsx";
+import { Button, FormControl } from "react-bootstrap";
 
-interface IChatProps {
+type ChatProps = {
   user: IUser;
   dispatch: Function;
   addMessage: Function;
@@ -13,21 +15,26 @@ interface IChatProps {
   messages: IMessage[];
   mainUrl: string;
   io: Function;
-}
+};
 
-export const Chat: React.FC<IChatProps> = React.memo(
-  ({ user, dispatch, addMessage, setMessages, messages, mainUrl, io }) => {
-    // реф сокета
+export const Chat = React.memo(
+  ({
+    user,
+    dispatch,
+    addMessage,
+    setMessages,
+    messages,
+    mainUrl,
+    io,
+  }: ChatProps) => {
     const socketRef = React.useRef<any>(null);
-    // реф конца сообщений
+
     const messagesEndRef = React.useRef<any>(null);
 
-    // функция прокрутки к концу сообщений
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    // инициализация io и вывод сообщений
     useEffect(() => {
       socketRef.current = io(mainUrl);
 
@@ -40,8 +47,6 @@ export const Chat: React.FC<IChatProps> = React.memo(
       return () => socketRef.current.disconnect();
     }, [dispatch, io, mainUrl, setMessages]);
 
-    // отправка сообщений
-
     const onMessageSubmit = async (values: IMessage, { resetForm }: any) => {
       if (!values.message) {
         return;
@@ -53,35 +58,33 @@ export const Chat: React.FC<IChatProps> = React.memo(
 
     return (
       <>
-        <div className="card">
-          <div className="card-header msg_head">
+        <div className={styles.chat}>
+          <div className={styles.chatHeader}>
             <h2 className="text-white">Чат</h2>
           </div>
-          <div className="card-body msg_card_body">
+          <div className={styles.chatBody}>
             {messages.map(({ _id, avatar, nick, message }: IMessage) => (
               <div key={_id}>
                 {user.nickname === nick ? (
                   <div className="d-flex justify-content-start mb-4">
                     <img
                       src={`${mainUrl}/avatar/${avatar}`}
-                      className="rounded-circle user_img_msg"
+                      className={clsx(styles.msgAvatar, "rounded-circle")}
                       alt="user"
                     />
 
-                    <div className="msg_cotainer">
-                      {nick}:{" "}
-                      <span className="font-weight-bold">{message}</span>
+                    <div className={styles.msgContainer}>
+                      {nick}:<span className="font-weight-bold">{message}</span>
                     </div>
                   </div>
                 ) : (
                   <div className="d-flex justify-content-end mb-4">
-                    <div className="msg_cotainer_send">
-                      {nick}:{" "}
-                      <span className="font-weight-bold">{message}</span>
+                    <div className={styles.msg}>
+                      {nick}:<span className="font-weight-bold">{message}</span>
                     </div>
                     <img
                       src={`${mainUrl}/avatar/${avatar}`}
-                      className="rounded-circle user_img_msg"
+                      className={clsx(styles.msgAvatar, "rounded-circle")}
                       alt="user"
                     />
                   </div>
@@ -90,7 +93,7 @@ export const Chat: React.FC<IChatProps> = React.memo(
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <div className="card-footer">
+          <div className={styles.chatFooter}>
             <Formik
               initialValues={{
                 _id: null,
@@ -102,19 +105,28 @@ export const Chat: React.FC<IChatProps> = React.memo(
                 onMessageSubmit(values, actions);
               }}
             >
-              <Form className="input-group">
-                <Field
-                  id="message"
-                  type="text"
-                  name="message"
-                  className="form-control type_msg"
-                  placeholder="Введите сообщение..."
-                  autoComplete="off"
-                />
+              <Form className="d-flex">
+                <Field type="text" name="message">
+                  {({ field }: any) => (
+                    <FormControl
+                      id="message"
+                      className={styles.msgInput}
+                      type="text"
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Введите сообщение..."
+                      autoComplete="off"
+                    />
+                  )}
+                </Field>
 
-                <button type="submit" className="btn btn-outline-danger ">
+                <Button
+                  variant="outline-danger"
+                  className={styles.msgBtn}
+                  type="submit"
+                >
                   <IoMdSend />
-                </button>
+                </Button>
               </Form>
             </Formik>
           </div>

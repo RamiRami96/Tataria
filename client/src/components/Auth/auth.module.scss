@@ -1,0 +1,50 @@
+$gc: #181818;
+$wc: #fff;
+$rc: #fa255e;
+
+.auth {
+  padding-top: 15vh;
+}
+
+.title {
+  color: $rc;
+  font-weight: 700;
+}
+
+.tabs {
+  &:hover {
+    color: $rc !important;
+  }
+}
+
+.input {
+  background: none !important;
+  border: 1px solid $rc !important;
+  color: $wc !important;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px 20px;
+  height: 55px;
+  color: #fff !important;
+  -webkit-box-shadow: inset 0 0 0 50px #000 !important;
+  box-shadow: inset 0 0 0 50px #000 !important;
+  -webkit-text-fill-color: #fff !important;
+  &:focus,
+  &:active {
+    border-color: $rc !important;
+  }
+}
+
+.btn {
+  background: none !important;
+  border: 1px solid $rc;
+  color: $rc;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 10px 20px;
+  height: 55px;
+  &:hover {
+    background: $rc !important;
+    color: $wc;
+  }
+}

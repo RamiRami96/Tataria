@@ -1,7 +1,7 @@
 import { IAction, IMessages } from "../interfaces/interfaces";
 import { Dispatch } from "redux";
-
-// редьюсер чата
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "./store";
 
 const initialState: IMessages = {
   messages: [],
@@ -12,6 +12,8 @@ enum MessageActionType {
   SET_MESSAGES = "SET_MESSAGES",
   ADD_MESSAGE = "ADD_MESSAGE",
 }
+
+type ThunkType = ThunkAction<void, RootState, unknown, IAction>;
 
 export const messageReducer = (
   state = initialState,
@@ -37,14 +39,17 @@ const addMessageAction = (data: []) => ({
   payload: data,
 });
 
-export const setMessages = (socket: any) => (dispatch: Dispatch<IAction>) => {
-  socket.on("messages", (res: any) => {
-    dispatch(setMessagesAction(res));
-  });
-};
+export const setMessages =
+  (socket: any): ThunkType =>
+  (dispatch: Dispatch<IAction>) => {
+    socket.on("messages", (res: any) => {
+      dispatch(setMessagesAction(res));
+    });
+  };
 
 export const addMessage =
-  (socket: any, data: any) => (dispatch: Dispatch<IAction>) => {
+  (socket: any, data: any): ThunkType =>
+  (dispatch: Dispatch<IAction>) => {
     socket.emit("message", data);
 
     dispatch(addMessageAction(data));

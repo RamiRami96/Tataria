@@ -20,13 +20,13 @@ import {
   deleteTrack,
 } from "./store/trackReducer";
 import { RootState } from "./store/store";
-import "./styles/style.css";
+import "./styles/style.scss";
 import preloader from "./images/preloader.gif";
 import { playTrack, setActiveTrack } from "./store/playerReducer";
 import { mainUrl } from "./api/api";
 /// <reference path="globals.d.ts" />
 
-// главня контейнерная компонента приложения
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -112,7 +112,7 @@ export const App: React.FC = () => {
                         mainUrl={mainUrl}
                       />
                     ) : (
-                      <Auth infoAuthMsg={infoAuthMsg} />
+                      <Auth dispatch={dispatch} infoAuthMsg={infoAuthMsg} />
                     )
                   }
                 />

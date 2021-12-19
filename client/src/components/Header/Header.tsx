@@ -1,108 +1,131 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
+import logo from "./icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { IUser } from "../../interfaces/interfaces";
 import { IoIosMenu } from "react-icons/io";
+import { Col, Offcanvas, Row } from "react-bootstrap";
+import clsx from "clsx";
 
-// компонента шапки
+import * as styles from "./header.module.scss";
 
-interface IHeaderProps {
+type IHeaderProps = {
   user: IUser;
   isAuth: boolean;
   dispatch: Function;
   logoutUser: Function;
-}
+};
 
-export const Header: React.FC<IHeaderProps> = ({
+export const Header = ({
   user,
   isAuth,
   dispatch,
   logoutUser,
-}) => {
-  // логика при которой ссылка в шапке будет активной в зависимости от нахождения
-  // в нужной компоненте пользователя
+}: IHeaderProps) => {
   const { pathname } = useLocation();
   const splitLocation = pathname.split("/");
-  return (
-    <div className=" d-flex justify-content-between header">
-      <div className="header__logo py-4">
-        <Link to="/">
-          <img src={logo} alt="logo" />
-        </Link>
-      </div>
-      <div className="header__mobile d-flex d-md-none pt-4">
-        <IoIosMenu
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-        />
 
-        <div
-          className="offcanvas offcanvas-end p-2"
-          tabIndex={-1}
-          id="offcanvasRight"
-          aria-labelledby="offcanvasRightLabel"
-        >
-          <div className="offcanvas-header">
-            <h6 className="text-white" id="offcanvasRightLabel">
-              {user.nickname
-                ? `С возвращением, ${user.nickname}!`
-                : "Войдите или зарегистрируетесь!"}
-            </h6>
-            <button
-              type="button"
-              className="btn-close text-reset"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="offcanvas-body">
-            <ul className="p-0">
-              <li>
-                <Link to="/">Чарт</Link>
-              </li>
-              <li>
-                <Link to="/profile"> {isAuth ? "Профиль" : "Войти"}</Link>
-              </li>
-              {isAuth && (
-                <li>
-                  <Link to="/profile" onClick={() => dispatch(logoutUser())}>
-                    Выйти
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <Row>
+      <Col
+        xs={12}
+        className={clsx(
+          styles.header,
+          "fixed-top d-flex justify-content-between px-3 px-md-5"
+        )}
+      >
+        <div className="py-4">
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+        </div>
+        <div className="d-flex d-md-none pt-4">
+          <IoIosMenu className={styles.menuIcon} onClick={handleShow} />
+          <Offcanvas
+            show={show}
+            onHide={handleClose}
+            className={clsx(styles.mobile, "p-2")}
+            placement="end"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title className="text-white">
+                {user.nickname
+                  ? `С возвращением, ${user.nickname}!`
+                  : "Войдите или зарегистрируетесь!"}
+              </Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <ul className="p-0">
+                <li className={styles.menuLink}>
+                  <Link to="/" onClick={handleClose}>
+                    Чарт
                   </Link>
                 </li>
-              )}
-            </ul>
-          </div>
+                <li className={styles.menuLink}>
+                  <Link to="/profile" onClick={handleClose}>
+                    {" "}
+                    {isAuth ? "Профиль" : "Войти"}
+                  </Link>
+                </li>
+                {isAuth && (
+                  <li className={styles.menuLink}>
+                    <Link
+                      to="/profile"
+                      onClick={() => dispatch(logoutUser(), handleClose())}
+                    >
+                      Выйти
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </Offcanvas.Body>
+          </Offcanvas>
         </div>
-      </div>
-      <div className="header__menu d-none d-md-flex py-4">
-        <ul className="d-flex ">
-          <li>
-            <Link
-              className={splitLocation[1] === "" ? "activeLink" : ""}
-              to="/"
-            >
-              Чарт
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              className={splitLocation[1] === "profile" ? "activeLink" : ""}
-              to="/profile"
-            >
-              {isAuth ? "Профиль" : "Войти"}
-            </Link>
-          </li>
-          {isAuth && (
+        <div className="d-none d-md-flex py-4">
+          <ul className="d-flex">
             <li>
-              <Link to="/profile" onClick={() => dispatch(logoutUser())}>
-                Выйти
+              <Link
+                className={
+                  splitLocation[1] === ""
+                    ? clsx(styles.menuList, styles.activeList)
+                    : styles.menuList
+                }
+                to="/"
+              >
+                Чарт
               </Link>
             </li>
-          )}
-        </ul>
-      </div>
-    </div>
+
+            <li>
+              <Link
+                className={
+                  splitLocation[1] === "profile"
+                    ? clsx(styles.menuList, styles.activeList)
+                    : styles.menuList
+                }
+                to="/profile"
+              >
+                {isAuth ? "Профиль" : "Войти"}
+              </Link>
+            </li>
+            {isAuth && (
+              <li>
+                <Link
+                  className={styles.menuList}
+                  to="/profile"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  Выйти
+                </Link>
+              </li>
+            )}
+          </ul>
+        </div>
+      </Col>
+    </Row>
   );
 };

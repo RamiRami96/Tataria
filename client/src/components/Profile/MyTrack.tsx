@@ -1,46 +1,43 @@
+import clsx from "clsx";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { ITrack } from "../../interfaces/interfaces";
 
-// компонента загруженного трека
+import * as styles from "./profile.module.scss";
 
-interface MyTrackProps {
+type MyTrackProps = {
   track: ITrack;
   index: number;
   mainUrl: string;
   setTrackId: any;
-}
+  handleShowDelete: Function;
+};
 
-export const MyTrack: React.FC<MyTrackProps> = ({
+export const MyTrack = ({
   index,
   track,
   mainUrl,
   setTrackId,
-}) => {
+  handleShowDelete,
+}: MyTrackProps) => {
   return (
     <>
       <tr>
-        <th scope="row">{index + 1}</th>
+        <th>{index + 1}</th>
         <td>
           <img src={`${mainUrl}/image/${track.poster}`} alt="img" />
         </td>
-
         <td>{track.title}</td>
+        <td>{track.likes.length}</td>
         <td>
-          <> {track.likes.length}</>
-        </td>
-        <td>
-          <>
-            <IoMdClose
-              className="me-1 pb-1 like-icon delete-icon"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal2"
-              data-id={track._id}
-              onClick={() => {
-                setTrackId(track._id);
-              }}
-            />
-          </>
+          <IoMdClose
+            className={clsx(styles.deleteIcon, "me-1 pb-1 ")}
+            data-id={track._id}
+            onClick={() => {
+              setTrackId(track._id);
+              handleShowDelete();
+            }}
+          />
         </td>
       </tr>
     </>
