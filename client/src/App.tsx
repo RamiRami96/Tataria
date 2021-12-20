@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { Auth } from "./components/Auth/Auth";
 import { Chart } from "./components/Chart/Chart";
 import { Header } from "./components/Header/Header";
@@ -24,9 +31,10 @@ import "./styles/style.scss";
 import preloader from "./images/preloader.gif";
 import { playTrack, setActiveTrack } from "./store/playerReducer";
 import { mainUrl } from "./api/api";
-/// <reference path="globals.d.ts" />
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
+/// <reference path="globals.d.ts" />
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -56,7 +64,7 @@ export const App: React.FC = () => {
   return (
     <>
       <Router>
-        <div className="container">
+        <Container>
           <Header
             user={user}
             isAuth={isAuth}
@@ -64,59 +72,90 @@ export const App: React.FC = () => {
             logoutUser={logoutUser}
           />
           {authLoading ? (
-            <div className="row">
-              <div className="col-12 d-flex justify-content-center align-items-center preloader">
+            <Row>
+              <Col
+                xs={12}
+                className=" d-flex justify-content-center align-items-center preloader"
+              >
                 <img src={preloader} alt="preloader" />
-              </div>
-            </div>
-          ) : (
-            <>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() => (
-                    <Chart
-                      dispatch={dispatch}
-                      setTracks={setTracks}
-                      likeTrack={likeTrack}
-                      unLikeTrack={unLikeTrack}
-                      active={active}
-                      tracks={tracks}
-                      user={user}
-                      isAuth={isAuth}
-                      playTrack={playTrack}
-                      setActiveTrack={setActiveTrack}
-                      mainUrl={mainUrl}
-                    />
-                  )}
-                />
+              </Col>
+            </Row>
+          ) : isAuth ? (
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <Chart
+                    dispatch={dispatch}
+                    setTracks={setTracks}
+                    likeTrack={likeTrack}
+                    unLikeTrack={unLikeTrack}
+                    active={active}
+                    tracks={tracks}
+                    user={user}
+                    isAuth={isAuth}
+                    playTrack={playTrack}
+                    setActiveTrack={setActiveTrack}
+                    mainUrl={mainUrl}
+                  />
+                )}
+              />
 
-                <Route
-                  exact
-                  path="/profile"
-                  render={() =>
-                    isAuth ? (
-                      <Profile
-                        tracks={tracks}
-                        messages={messages}
-                        dispatch={dispatch}
-                        setTracks={setTracks}
-                        createTrack={createTrack}
-                        deleteTrack={deleteTrack}
-                        uploadAvatar={uploadAvatar}
-                        user={user}
-                        infoTrackMsg={infoTrackMsg}
-                        trackLoading={trackLoading}
-                        refreshUser={refreshUser}
-                        mainUrl={mainUrl}
-                      />
-                    ) : (
-                      <Auth dispatch={dispatch} infoAuthMsg={infoAuthMsg} />
-                    )
-                  }
-                />
-              </Switch>
+              <Route
+                exact
+                path="/profile"
+                render={() => (
+                  <Profile
+                    tracks={tracks}
+                    messages={messages}
+                    dispatch={dispatch}
+                    setTracks={setTracks}
+                    createTrack={createTrack}
+                    deleteTrack={deleteTrack}
+                    uploadAvatar={uploadAvatar}
+                    user={user}
+                    infoTrackMsg={infoTrackMsg}
+                    trackLoading={trackLoading}
+                    refreshUser={refreshUser}
+                    mainUrl={mainUrl}
+                  />
+                )}
+              />
+
+              <Redirect to="/" />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <Chart
+                    dispatch={dispatch}
+                    setTracks={setTracks}
+                    likeTrack={likeTrack}
+                    unLikeTrack={unLikeTrack}
+                    active={active}
+                    tracks={tracks}
+                    user={user}
+                    isAuth={isAuth}
+                    playTrack={playTrack}
+                    setActiveTrack={setActiveTrack}
+                    mainUrl={mainUrl}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/auth"
+                render={() => (
+                  <Auth dispatch={dispatch} infoAuthMsg={infoAuthMsg} />
+                )}
+              />
+
+              <Redirect to="/auth" />
+
               <Player
                 tracks={tracks}
                 pause={pause}
@@ -126,9 +165,9 @@ export const App: React.FC = () => {
                 currentTime={currentTime}
                 mainUrl={mainUrl}
               />
-            </>
+            </Switch>
           )}
-        </div>
+        </Container>
       </Router>
     </>
   );

@@ -74,7 +74,7 @@ export const Header = ({
                 {isAuth && (
                   <li className={styles.menuLink}>
                     <Link
-                      to="/profile"
+                      to="/"
                       onClick={() => dispatch(logoutUser(), handleClose())}
                     >
                       Выйти
@@ -100,26 +100,34 @@ export const Header = ({
               </Link>
             </li>
 
-            <li>
-              <Link
-                className={
-                  splitLocation[1] === "profile"
-                    ? clsx(styles.menuList, styles.activeList)
-                    : styles.menuList
-                }
-                to="/profile"
-              >
-                {isAuth ? "Профиль" : "Войти"}
-              </Link>
-            </li>
             {isAuth && (
               <li>
                 <Link
-                  className={styles.menuList}
+                  className={
+                    splitLocation[1] === "profile"
+                      ? clsx(styles.menuList, styles.activeList)
+                      : styles.menuList
+                  }
                   to="/profile"
+                >
+                  Профиль
+                </Link>
+              </li>
+            )}
+            {isAuth ? (
+              <li>
+                <Link
+                  className={styles.menuList}
+                  to="/"
                   onClick={() => dispatch(logoutUser())}
                 >
                   Выйти
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link className={styles.menuList} to="/auth">
+                  Войти
                 </Link>
               </li>
             )}
