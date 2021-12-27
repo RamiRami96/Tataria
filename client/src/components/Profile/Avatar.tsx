@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import { Button } from "react-bootstrap";
 import { IoIosCloudDownload } from "react-icons/io";
 import { IUser } from "../../interfaces/interfaces";
@@ -8,9 +8,9 @@ import * as styles from "./profile.module.scss";
 
 type AvatarProps = {
   mainUrl: string;
-  dispatch: Function;
-  uploadAvatar: Function;
-  refreshUser: Function;
+  dispatch: Dispatch<any>;
+  uploadAvatar: (formData: FormData) => void;
+  refreshUser: () => void;
   user: IUser;
 };
 
@@ -26,12 +26,12 @@ export const Avatar = ({
     setAvatar(avatarFile);
   };
 
-  const uploadAvatarBtn = async () => {
+  const uploadAvatarBtn = () => {
     let formData = new FormData();
     formData.append("avatar", avatar as Blob);
-    await uploadAvatar(formData);
+    uploadAvatar(formData);
     setAvatar({} as File);
-    await dispatch(refreshUser());
+    dispatch(refreshUser());
   };
 
   return (

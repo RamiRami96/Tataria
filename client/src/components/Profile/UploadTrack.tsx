@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, Dispatch, useState } from "react";
 import clsx from "clsx";
 
 import { Formik, Form, Field } from "formik";
@@ -14,20 +14,20 @@ import { Button, FormControl, FormGroup, Modal } from "react-bootstrap";
 import * as styles from "./profile.module.scss";
 
 type IUploadProps = {
-  dispatch: Function;
-  createTrack: Function;
-  refreshUser: Function;
-  setTracks: Function;
+  dispatch: Dispatch<any>;
+  createTrack: (formData: any) => void;
+  refreshUser: () => void;
+  setTracks: () => void;
   infoTrackMsg: string;
   trackLoading: boolean;
   showUpload: boolean;
-  handleCloseUpload: Function;
+  handleCloseUpload: () => void;
 };
 
 type IValuesState = {
   title: string;
-  poster: object;
-  audio: object;
+  poster: File | object;
+  audio: File | object;
 };
 
 const initialValues: IValuesState = {
@@ -113,14 +113,14 @@ export const UploadTrack = ({
     changeFunc(field, event.currentTarget.files![0]);
   };
 
-  const handleSubmit = async (values: any, { resetForm }: any) => {
+  const handleSubmit = (values: any, { resetForm }: any) => {
     let formData = new FormData();
     formData.append("title", values.title);
     formData.append("poster", values.poster as Blob);
     formData.append("audio", values.audio as Blob);
-    await dispatch(createTrack(formData));
-    await dispatch(refreshUser());
-    await dispatch(setTracks());
+    dispatch(createTrack(formData));
+    dispatch(refreshUser());
+    dispatch(setTracks());
     setFileValue({ ...fileValue, poster: false, audio: false });
     resetForm({});
     handleCloseUpload();

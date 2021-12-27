@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import logo from "./icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { IUser } from "../../interfaces/interfaces";
@@ -11,8 +11,8 @@ import * as styles from "./header.module.scss";
 type IHeaderProps = {
   user: IUser;
   isAuth: boolean;
-  dispatch: Function;
-  logoutUser: Function;
+  dispatch: Dispatch<any>;
+  logoutUser: () => void;
 };
 
 export const Header = ({
@@ -28,6 +28,11 @@ export const Header = ({
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const logout = () => {
+    dispatch(logoutUser());
+    handleClose();
+  };
 
   return (
     <Row>
@@ -73,10 +78,7 @@ export const Header = ({
                 </li>
                 {isAuth && (
                   <li className={styles.menuLink}>
-                    <Link
-                      to="/"
-                      onClick={() => dispatch(logoutUser(), handleClose())}
-                    >
+                    <Link to="/" onClick={logout}>
                       Выйти
                     </Link>
                   </li>

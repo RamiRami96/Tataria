@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import clsx from "clsx";
 import { ITrack, IUser } from "../../interfaces/interfaces";
 import { IoIosHeart, IoIosHeartEmpty, IoIosPlay } from "react-icons/io";
@@ -8,16 +8,16 @@ import * as styles from "./chart.module.scss";
 import { sliceText } from "../../helpers/sliceText";
 
 type ChartItemProps = {
-  setTracks: Function;
+  setTracks: () => void;
   track: ITrack;
   index: number;
-  dispatch: Function;
+  dispatch: Dispatch<any>;
   likeTrack: Function;
   active?: ITrack;
   user: IUser;
   isAuth: boolean;
-  playTrack: Function;
-  setActiveTrack: Function;
+  playTrack: () => void;
+  setActiveTrack: (track: ITrack) => void;
   unLikeTrack: Function;
   mainUrl: string;
 };

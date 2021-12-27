@@ -10,15 +10,15 @@ import * as styles from "./chart.module.scss";
 
 type ChartProps = {
   dispatch: Dispatch<any>;
-  setTracks: Function;
-  likeTrack: Function;
-  unLikeTrack: Function;
+  setTracks: () => void;
+  likeTrack: (id: number) => void;
+  unLikeTrack: (id: number) => void;
   tracks: ITrack[];
   active: ITrack;
   user: IUser;
   isAuth: boolean;
-  playTrack: Function;
-  setActiveTrack: Function;
+  playTrack: () => void;
+  setActiveTrack: (track: ITrack) => void;
   mainUrl: string;
 };
 

@@ -8,7 +8,7 @@ import * as styles from "./auth.module.scss";
 
 type LoginProps = {
   dispatch: Dispatch<any>;
-  loginUser: Function;
+  loginUser: (values: ILoginForm) => void;
   infoAuthMsg: string;
 };
 

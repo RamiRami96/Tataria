@@ -10,7 +10,7 @@ type MyTrackProps = {
   index: number;
   mainUrl: string;
   setTrackId: any;
-  handleShowDelete: Function;
+  handleShowDelete: () => void;
 };
 
 export const MyTrack = ({

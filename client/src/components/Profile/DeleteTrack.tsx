@@ -1,15 +1,15 @@
-import React, { SyntheticEvent } from "react";
+import React, { Dispatch, SyntheticEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 // компонента удаления трека
 
 type DeleteTrackProps = {
-  dispatch: Function;
-  deleteTrack: Function;
-  setTracks: Function;
+  dispatch: Dispatch<any>;
+  deleteTrack: (id: number) => void;
+  setTracks: () => void;
   trackId: number;
   showDelete: boolean;
-  handleCloseDelete: Function;
+  handleCloseDelete: () => void;
 };
 
 export const DeleteTrack = ({

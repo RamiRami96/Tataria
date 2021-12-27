@@ -9,7 +9,7 @@ import * as styles from "./auth.module.scss";
 
 type RegisterProps = {
   dispatch: Dispatch<any>;
-  registerUser: Function;
+  registerUser: (values: IRegisterForm) => void;
   infoAuthMsg: string;
 };
 

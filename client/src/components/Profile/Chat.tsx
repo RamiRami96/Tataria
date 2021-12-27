@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Dispatch, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import { IMessage, IUser } from "../../interfaces/interfaces";
 import { IoMdSend } from "react-icons/io";
@@ -6,15 +6,17 @@ import { IoMdSend } from "react-icons/io";
 import * as styles from "./profile.module.scss";
 import clsx from "clsx";
 import { Button, FormControl } from "react-bootstrap";
+import { Socket } from "socket.io-client";
+import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 
 type ChatProps = {
   user: IUser;
-  dispatch: Function;
-  addMessage: Function;
-  setMessages: Function;
+  dispatch: Dispatch<any>;
+  addMessage: (io: any, values?: any) => void;
+  setMessages: (io: any) => void;
   messages: IMessage[];
   mainUrl: string;
-  io: Function;
+  io: (mainUrl: string) => Socket<DefaultEventsMap, DefaultEventsMap>;
 };
 
 export const Chat = React.memo(
@@ -47,11 +49,11 @@ export const Chat = React.memo(
       return () => socketRef.current.disconnect();
     }, [dispatch, io, mainUrl, setMessages]);
 
-    const onMessageSubmit = async (values: IMessage, { resetForm }: any) => {
+    const onMessageSubmit = (values: IMessage, { resetForm }: any) => {
       if (!values.message) {
         return;
       } else {
-        await dispatch(addMessage(io(mainUrl), values));
+        dispatch(addMessage(io(mainUrl), values));
         resetForm({});
       }
     };

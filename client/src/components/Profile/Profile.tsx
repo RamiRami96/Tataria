@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { IoMdHeart, IoMdClose } from "react-icons/io";
@@ -17,15 +17,15 @@ import * as styles from "./profile.module.scss";
 interface IProfileProps {
   tracks: ITrack[];
   messages: IMessage[];
-  dispatch: Function;
-  setTracks: Function;
-  createTrack: Function;
-  deleteTrack: Function;
-  uploadAvatar: Function;
+  dispatch: Dispatch<any>;
+  setTracks: () => void;
+  createTrack: (formData: any) => void;
+  deleteTrack: (id: number) => void;
+  uploadAvatar: (formData: FormData) => void;
   user: IUser;
   infoTrackMsg: string;
   trackLoading: boolean;
-  refreshUser: Function;
+  refreshUser: () => void;
   mainUrl: string;
 }
 
