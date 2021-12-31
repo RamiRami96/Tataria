@@ -155,18 +155,17 @@ export const App: React.FC = () => {
               />
 
               <Redirect to="/auth" />
-
-              <Player
-                tracks={tracks}
-                pause={pause}
-                volume={volume}
-                active={active}
-                duration={duration}
-                currentTime={currentTime}
-                mainUrl={mainUrl}
-              />
             </Switch>
           )}
+          <Player
+            tracks={tracks}
+            pause={pause}
+            volume={volume}
+            active={active}
+            duration={duration}
+            currentTime={currentTime}
+            mainUrl={mainUrl}
+          />
         </Container>
       </Router>
     </>
