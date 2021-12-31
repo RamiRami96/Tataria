@@ -70,7 +70,7 @@ export const Chat = React.memo(
                 {user.nickname === nick ? (
                   <div className="d-flex justify-content-start mb-4">
                     <img
-                      src={`${mainUrl}/avatar/${avatar}`}
+                      src={`${mainUrl}/avatar/${user.avatar}`}
                       className={clsx(styles.msgAvatar, "rounded-circle")}
                       alt="user"
                     />
