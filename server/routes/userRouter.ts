@@ -5,8 +5,6 @@ import multer from "multer";
 import path from "path";
 import authMiddleware from "../middleware/authMiddleware";
 
-// Настройка загрузка постера и аудио
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (
@@ -23,9 +21,6 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
-// присваем к переменной upload настройки загрузки
-// теперь это наш миддлвейр позволяющий загружать аватар
 
 let upload = multer({ storage: storage }).single("avatar");
 

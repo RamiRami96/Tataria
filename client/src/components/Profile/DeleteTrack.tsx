@@ -1,8 +1,6 @@
 import React, { Dispatch, SyntheticEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-// компонента удаления трека
-
 type DeleteTrackProps = {
   dispatch: Dispatch<any>;
   deleteTrack: (id: number) => void;

@@ -39,7 +39,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export const App: React.FC = () => {
   const dispatch = useDispatch();
 
-  // селекторы приложения
   const { isAuth, user, infoAuthMsg, authLoading } = useSelector(
     (state: RootState) => state.authReducer
   );
@@ -54,8 +53,6 @@ export const App: React.FC = () => {
   const messages = useSelector(
     (state: RootState) => state.messageReducer.messages
   );
-
-  // инициализация юзера
 
   useEffect(() => {
     dispatch(authUser());

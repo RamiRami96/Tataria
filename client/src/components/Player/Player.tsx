@@ -22,8 +22,6 @@ import {
 import * as styles from "./player.module.scss";
 import { sliceText } from "../../helpers/sliceText";
 
-//компонента проигрывателя
-
 type IPlayerProps = {
   tracks: ITrack[];
   pause: boolean;

@@ -4,8 +4,6 @@ import authController from "../controllers/authController";
 const { check } = require("express-validator");
 import authMiddleware from "../middleware/authMiddleware";
 
-// роуты авторизации с валидацией у роута register
-
 router.post(
   "/register",
   [

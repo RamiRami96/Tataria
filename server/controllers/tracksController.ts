@@ -3,11 +3,7 @@ import Track from "../models/Track";
 import User from "../models/User";
 import fs from "fs";
 import path from "path";
-
-//контроллеров треков
-
 class TrackController {
-  //метод получения всех треков
   async getTracks(req: express.Request, res: express.Response) {
     try {
       const tracks = await Track.find();
@@ -16,7 +12,7 @@ class TrackController {
       res.status(404).json("Треки не найдены");
     }
   }
-  //метод получения трека по id
+
   async getTrack(req: express.Request, res: express.Response) {
     try {
       const { id } = req.params;
@@ -25,13 +21,11 @@ class TrackController {
     } catch (error) {}
     res.status(404).json("Трек не найден");
   }
-  //метод созадания трека
+
   async createTrack(req: express.Request, res: express.Response) {
     try {
-      // получаем название трека из формы на клиенте
       const { title } = req.body;
-      // так как тип не предусматривает получение свойств из массива req.files,
-      // мне пришлось сделать свой тип и из константы reqFiles сделать новый массив files
+
       const reqFiles = req.files as {
         [fieldname: string]: Express.Multer.File[];
       };
@@ -40,8 +34,6 @@ class TrackController {
 
       const user = await User.findOne({ _id: req.user.id });
 
-      // создаем новый трек
-
       const newTrack = new Track({
         artist: user.nickname,
         title,
@@ -49,8 +41,6 @@ class TrackController {
         audio: files[1].originalname,
         user: user.id,
       });
-
-      // добавляем к пользователю в массив tracks новый трек
 
       user.tracks.push(newTrack);
 
@@ -62,7 +52,7 @@ class TrackController {
       res.status(404).json("Не удалось загрузить трек");
     }
   }
-  //метод лайка трейка
+
   async likeTrack(req: express.Request, res: express.Response) {
     try {
       const { id } = req.params;
@@ -70,8 +60,6 @@ class TrackController {
       const user = await User.findOne({ _id: req.user.id });
 
       const track = await Track.findById(id);
-
-      // добавляю id юзера в массив массив likes
 
       track.likes.push(user._id);
 
@@ -82,7 +70,7 @@ class TrackController {
       res.status(404).json("Не удалось поставить лайк");
     }
   }
-  //метод отмены лайка трека
+
   async unLikeTrack(req: express.Request, res: express.Response) {
     try {
       const { id } = req.params;
@@ -90,8 +78,6 @@ class TrackController {
       const user = await User.findOne({ _id: req.user.id });
 
       const track = await Track.findById(id);
-
-      // удаляю id юзера в массив массив likes
 
       track.likes.splice(
         track.likes.findIndex(function (i: any) {
@@ -107,7 +93,7 @@ class TrackController {
       res.status(404).json("Не удалось поставить лайк");
     }
   }
-  //метод удаления трека
+
   async deleteTrack(req: express.Request, res: express.Response) {
     try {
       const { id } = req.params;
@@ -116,17 +102,11 @@ class TrackController {
 
       const track = await Track.findById(id);
 
-      // удаляю id трека из массива tracks у пользователя
-
       user.tracks.filter((t: any) => t.toString() !== track._id.toString());
 
       await user.save();
 
-      // удаляю сам трек по id
-
       await Track.findByIdAndDelete(id);
-
-      // удаляю аудио и изображение из папок
 
       fs.unlinkSync(path.join(__dirname, `../public/audio/${track.audio}`));
 

@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 
-// схема сообщения
-
 const Message = new Schema({
   avatar: { type: String, required: true },
   nick: { type: String, required: true },
